@@ -1,4 +1,4 @@
-"""Models for Final Project NameTBD"""
+"""Models for Final Project WECamp"""
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -47,6 +47,8 @@ class Rating(db.Model):
         return f"<Rating user_id={self.user_id} camping_id{self.camping_id}> "
 
 def connect_to_db(flask_app, db_uri="postgresql:///wecamp", echo=True):
+    """connect to database"""
+
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
