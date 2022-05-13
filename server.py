@@ -10,7 +10,7 @@ app = Flask(__name__)
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
 
-# API_KEY = os.environ['NPS_KEY']
+API_KEY = os.environ['NPS_KEY']
 
 @app.route('/')
 def homepage():
@@ -26,6 +26,12 @@ def search():
 
     return render_template ("search.html")
     #search is where the user will search using the API to find campsites that meet specific criteria
+
+@app.route("/search_results")
+def search_results():
+    """returns the user's search results"""
+    
+    return render_template("search_results.html")
 
 # @app.route('/create_user')
 
