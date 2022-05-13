@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Search the National Parks</h1>
+
+<p>A web application that allows users 
+    to search California State and National Parks 
+    and find their perfect camping destinations!</p>
+
+    <form action="/">
+        <label for="park">Choose a park</label>
+        <select name="park" id="park">
+          <!-- this should loop through the parks to create the list  -->
+          <!-- https://fellowship.hackbrightacademy.com/materials/serpt6/homework/skills-3-solution/ -->
+            <!-- see example from skills 3 solution -->
+        </select>
+        <br><br>
+        <input type="submit" value="Submit">
+      </form>
+    
+      
+      <form id="state-form" action="/search" method="POST">
+        <label for="state">Choose a State by entering the 2 letter 
+                      abreviation for a state 
+                        (example for California enter CA) </label>
+        <input type="text" id="US_state" name="state" value="state">
+        <input type="submit">
+      </form>
+
+      {% endblock %}
