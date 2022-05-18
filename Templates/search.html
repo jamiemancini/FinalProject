@@ -2,25 +2,27 @@
 
 {% block body %}
 
+
 <h1>Search the National Parks</h1>
 
 <p>A web application that allows users 
     to search California State and National Parks 
     and find their perfect camping destinations!</p>
 
-    <form action="/">
+    <!-- <form action="/">
         <label for="park">Choose a park</label>
-        <select name="park" id="park">
+        <select name="park" id="park"> -->
           <!-- this should loop through the parks to create the list  -->
           <!-- https://fellowship.hackbrightacademy.com/materials/serpt6/homework/skills-3-solution/ -->
             <!-- see example from skills 3 solution -->
-        </select>
+        <!-- </select>
         <br><br>
         <input type="submit" value="Submit">
-      </form>
+      </form> -->
     
-      
-      <form id="state-form" action="/search" method="POST">
+      <!-- user enters the 2 letter state code -->
+      <!-- that 2 letter state code will be used to fetch information from the API -->
+      <form id="state-form" >
         <label for="state">Choose a State by entering the 2 letter 
                       abreviation for a state 
                         (example for California enter CA) </label>
@@ -28,4 +30,8 @@
         <input type="submit">
       </form>
 
+      <h3>Names of the park campgrounds</h3>
+      <div id="campgrounds-go-here"></div>
+
+      <script src="static/fetch-app.js" defer></script>
       {% endblock %}
