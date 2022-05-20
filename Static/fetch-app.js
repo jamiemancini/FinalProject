@@ -16,36 +16,42 @@
 
 function showResults(results) {
     console.log(results);
+    //javascript for turning a json into a dictionary
+    // const dic = JSON.parse(results);
+    console.log(results.name);
     const stateDiv = document.querySelector('#campgrounds-go-here');
     // clear anything currently in the div
     stateDiv.innerHTML =null;
     
     //loop through to find the names of each campground
-    for (const parkName of results) {
+    for (const parkName of results.data) {
         document
             .querySelector('#campgrounds-go-here')
-            .insertAdjacentHTML("beforeend", '<li>${results.parkName.name}</li>');
+            .insertAdjacentHTML("beforeend", `<li>${parkName.name}</li>`);
 
             //is {parkName.name} accessing the name? how do I try it out?
     } 
 
 }
-debugger
+//debugger
+
 document.querySelector('#state-form').addEventListener('submit', (event) => {
     //do I need to prevent the form from triggering a page load?
     event.preventDefault();
 
     //get the 2 letter state code entered in by the user
-    const sateSelected=document.querySelector('#US_state').value;
+    const stateSelected=document.querySelector('#US_state').value;
     //gets all the campgrounds in the state
     //'https://developer.nps.gov/api/v1/campgrounds?stateCode=${stateSelected}&api_key=${API_KEY}'
 
-const url = "https://developer.nps.gov/api/v1/campgrounds?stateCode=${stateSelected}";
+    //need to have the serve put in the request to the API
+    //need to pass the state code to the server
+    //where does json information go when retrieved from the server
+const url = `http://localhost:5000/search_state?state=${stateSelected}`;
+
 fetch(url, {
     method: "GET",
-    headers: {
-        "X-API-KEY": "dUmx4agnRasxDjIEy7SjiPQhHQng1kou2aVwTD7b"
-    }
+    
 })
     .then(response => response.json())
     .then(apiResponse => {

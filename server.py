@@ -15,6 +15,7 @@ app.secret_key = 'SECRETSECRETSECRET'
 # app.jinja_env.undefined=StrictUndefined
 
 API_KEY = os.environ['NPS_KEY']
+print(API_KEY)
 
 @app.route('/')
 def homepage():
@@ -32,11 +33,26 @@ def search():
     return render_template ("search.html")
     #search is where the user will search using the API to find campsites that meet specific criteria
 
-# @app.route("/search_results")
-# def search_results():
-#     """returns the user's search results"""
-#     #?= request.json[']
-#     return render_template("search_results.html")
+
+#should I be using state, because the input of my form has value="state"
+@app.route('/search_state')
+def find_campgrounds():
+    """Search for campgrounds on NPS"""
+
+    #is this getting it from the form, where the value is state
+    state = request.args.get('state', '')
+    
+
+    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&api_key={API_KEY}'
+    print(url)
+
+    response = requests.get(url)
+    
+    data = response.json()
+    print(data)
+
+    return data
+
 
 # @app.route('/create_user')
 
