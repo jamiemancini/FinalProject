@@ -2,42 +2,48 @@
 
 {% block body %}
 
+<div id ="header">
+    <h1>Search the National Parks</h1>
 
-<h1>Search the National Parks</h1>
+      <p>A web application that allows users 
+          to search California State and National Parks 
+          and find their perfect camping destinations!
+      </p>
+      <br></br>
+</div>
 
-<p>A web application that allows users 
-    to search California State and National Parks 
-    and find their perfect camping destinations!</p>
-    <br></br>
+<div id = "form">
 
-      <form id="state-form" >
+    <form id="state-form" >
         <label for="state">Choose a State by entering the 2 letter 
                       abreviation for a state 
                         (example for California enter CA) </label>
-        <input type="text" id="US_state" name="state" placeholder="state">
-
-          <br> </br>
+            <input type="text" id="US_state" name="state" placeholder="state">
+            <br> </br>
 
         <label for="fees">Choose a Maximum Overnight Fee</label>
-        <input type="text" id="max_fees" name="fees" placeholder="maximum fee">
-        
-
-        <input type="submit">
+            <input type="text" id="max_fees" name="fees" placeholder="maximum fee">
+            <br> </br>
       
+        <input type="checkbox" id="reservable_campsites" name="reservable_campsites" value="reservable_campsites">
+            <label for="reservable_campsites">With Reservable Campsites</label><br>
+
+        <input type="checkbox" id="first_come_campsites" name="first_come_campsites" value="first_come_campsites">
+            <label for="first_come_campsites">With First Come First Serve Campsites</label><br>
+
+        <input type="checkbox" id="total_campsites" name="total_campsites" value="total_campsites">
+            <label for="total_campsites">Display Total Campsites</label>
         <br> </br>
-      
-      
-  <input type="checkbox" id="reservable_campsites" name="reservable_campsites" value="reservable_campsites">
-  <label for="reservable_campsites">With Reservable Campsites</label><br>
-  <input type="checkbox" id="first_come_campsites" name="first_come_campsites" value="first_come_campsites">
-  <label for="first_come_campsites">With First Come First Serve Campsites</label><br>
-  <input type="checkbox" id="total_campsites" name="total_campsites" value="total_campsites">
-  <label for="total_campsites">Display Total Campsites</label>
-</form>
-      <br> </br>
+  
+        <input type="submit">
+    </form>
+</div>
+<br></br>
 
-      <h3>Names of the park campgrounds</h3>
+<div id="results_list">
+      <h3 id="campgrounds_header"></h3>
       <div id="campgrounds-go-here"></div>
-      
+
+</div>      
       <script src="static/fetch-app.js" defer></script>
       {% endblock %}

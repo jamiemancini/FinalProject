@@ -2,35 +2,32 @@
 import os
 from flask import Flask, render_template, request, jsonify
 
-#only import what you need the server to access
-
-
 import requests
-
 
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
 
-
 API_KEY = os.environ['NPS_KEY']
-print(API_KEY)
 
 @app.route('/')
 def homepage():
     """returns home page"""
     
     return render_template ("homepage.html")
-
     #homepage is where user logs-in or can create an account
     #sign-in with gmail or facebook option (is this an extra time thing?)
 
 @app.route('/search')
 def search():
-    """returns the search page"""
+    """displays the search page with form"""
 
     return render_template ("search.html")
-    
 
+@app.route('/search/search_results')
+def search_results():
+    """displays the specifc campsite selected"""
+
+    return render_template ("search_results.html")
 
 @app.route('/search_state')
 def find_campgrounds():
