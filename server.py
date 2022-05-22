@@ -6,13 +6,11 @@ from flask import Flask, render_template, request, jsonify
 
 
 import requests
-#commented out above bec/
-# ModuleNotFoundError: No module named 'requests'
-#tried: pip3 install requests in terminal
+
 
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
-# app.jinja_env.undefined=StrictUndefined
+
 
 API_KEY = os.environ['NPS_KEY']
 print(API_KEY)
@@ -31,34 +29,22 @@ def search():
     """returns the search page"""
 
     return render_template ("search.html")
-    #search is where the user will search using the API to find campsites that meet specific criteria
+    
 
 
-#should I be using state, because the input of my form has value="state"
 @app.route('/search_state')
 def find_campgrounds():
     """Search for campgrounds on NPS"""
 
-    #is this getting it from the form, where the value is state
     state = request.args.get('state', '')
-    
 
-    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&api_key={API_KEY}'
-    print(url)
+    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=100&api_key={API_KEY}'
 
     response = requests.get(url)
     
     data = response.json()
-    print(data)
 
     return data
-
-
-# @app.route('/create_user')
-
-
-# @app.route('/login')
-
 
 
 if __name__ == "__main__":

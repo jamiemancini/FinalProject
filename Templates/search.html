@@ -8,30 +8,36 @@
 <p>A web application that allows users 
     to search California State and National Parks 
     and find their perfect camping destinations!</p>
+    <br></br>
 
-    <!-- <form action="/">
-        <label for="park">Choose a park</label>
-        <select name="park" id="park"> -->
-          <!-- this should loop through the parks to create the list  -->
-          <!-- https://fellowship.hackbrightacademy.com/materials/serpt6/homework/skills-3-solution/ -->
-            <!-- see example from skills 3 solution -->
-        <!-- </select>
-        <br><br>
-        <input type="submit" value="Submit">
-      </form> -->
-    
-      <!-- user enters the 2 letter state code -->
-      <!-- that 2 letter state code will be used to fetch information from the API -->
       <form id="state-form" >
         <label for="state">Choose a State by entering the 2 letter 
                       abreviation for a state 
                         (example for California enter CA) </label>
         <input type="text" id="US_state" name="state" placeholder="state">
+
+          <br> </br>
+
+        <label for="fees">Choose a Maximum Overnight Fee</label>
+        <input type="text" id="max_fees" name="fees" placeholder="maximum fee">
+        
+
         <input type="submit">
-      </form>
+      
+        <br> </br>
+      
+      
+  <input type="checkbox" id="reservable_campsites" name="reservable_campsites" value="reservable_campsites">
+  <label for="reservable_campsites">With Reservable Campsites</label><br>
+  <input type="checkbox" id="first_come_campsites" name="first_come_campsites" value="first_come_campsites">
+  <label for="first_come_campsites">With First Come First Serve Campsites</label><br>
+  <input type="checkbox" id="total_campsites" name="total_campsites" value="total_campsites">
+  <label for="total_campsites">Display Total Campsites</label>
+</form>
+      <br> </br>
 
       <h3>Names of the park campgrounds</h3>
       <div id="campgrounds-go-here"></div>
-
+      
       <script src="static/fetch-app.js" defer></script>
       {% endblock %}
