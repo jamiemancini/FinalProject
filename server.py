@@ -29,6 +29,14 @@ def search_results():
 
     return render_template ("search_results.html")
 
+@app.route('/campground/<campground_id>')
+def view_campground(campground_id):
+    """passes through the campground id"""
+
+    return campground_id
+
+    
+
 @app.route('/search_state')
 def find_campgrounds():
     """Search for campgrounds on NPS"""
