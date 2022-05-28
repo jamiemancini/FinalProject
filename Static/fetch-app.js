@@ -59,13 +59,36 @@ function showResults(results) {
 
     //loop through to find the names of each campground
     for (const parkName of results.data) {
-    
-    //pulls out the campsites that cost ess than the maxFeeSelected by user
-    if (parkName.fees[0]["cost"]< maxFeeSelected || maxFeeSelected==="") 
-    
+            let name =parkName.name;
+            let fees = parkName.fees[0]["cost"];
+            let toiletType = parkName.amenities["toilets"][0];
+            let cellPhoneReception = parkName.amenities["cellPhoneReception"];
+            let reservableSites = parkName.numberOfSitesReservable;
+            let firstServeSites = parkName.numberOfSitesFirstComeFirstServe;
+            let totalCampsites = parkName.campsites["totalSites"];
+            //let i=0; MAYBE: add a counter so that the user can see the total
+            //number of results
+
+    //05/28: (1) approach is to create variables for each of the key:value pairs
+    //that I'll be using.  (name, fees, toilets, cell phone reception, campsite counts
+    // by reservable, first come and total sites) This is done before I use my if elif statements
+    //that filters by the user's choice
+
+    //(2) approach is to create a new data set with just the information that is 
+    //needed about each campsite (name, fees, toilets, cell phone reception, campsite counts
+    // by reservable, first come and total sites) 
     {
-        //this will be a lot of if loops, for each checked box
-        if (reservable_campsites===true){
+    
+    //pulls out the campsites that cost less than the maxFeeSelected by user
+    //if the user doesn't pick a maxFee then all the results will be displayed
+    if (fees < maxFeeSelected || maxFeeSelected===0) {
+        if (phone_reception==="yes"){
+            if (toilets==="portable"){
+                if (reservable_campsites===true){
+                    if (first_come_campsites===true){
+                        if (total_campsites===true){
+                            
+        
 
         document
             .querySelector('#campgrounds-go-here')
@@ -77,7 +100,7 @@ function showResults(results) {
 
     } 
 
-}}}
+}}}}}}}}
 //debugger
 
 // //takes 
