@@ -1,14 +1,15 @@
 
 
 //requesting from the NPS API the campgrounds in the selected state
+//once the submit button is clicked
 document.querySelector('#state-form').addEventListener('submit', (event) => {
     event.preventDefault();
 
-// state selected by the user   
-const stateSelected=document.querySelector('#US_state').value;
+    // state selected by the user   
+    const stateSelected=document.querySelector('#US_state').value;
     
-//endpoint of the NPS API
-const url = `http://localhost:5000/search_state?state=${stateSelected}`;
+    //endpoint of the NPS API
+    const url = `http://localhost:5000/search_state?state=${stateSelected}`;
 
 fetch(url, {
     method: "GET",
@@ -82,25 +83,125 @@ function showResults(results) {
     //pulls out the campsites that cost less than the maxFeeSelected by user
     //if the user doesn't pick a maxFee then all the results will be displayed
     if (fees < maxFeeSelected || maxFeeSelected===0) {
-        if (phone_reception==="yes"){
-            if (toilets==="portable"){
-                if (reservable_campsites===true){
-                    if (first_come_campsites===true){
-                        if (total_campsites===true){
-                            
         
+        //results if phone reception is needed
+        if (phone_reception==="yes"){
+            
+            //IF USER clicks on the radio button "Vaulted / Portable"
+            //results if toilets with "Vaulted / Portable Toilet"
+            if (toilets==="portable"){
 
-        document
-            .querySelector('#campgrounds-go-here')
-            .insertAdjacentHTML("beforeend", 
-                `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
-                <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
-                <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>
-                <p>Total campsites: ${parkName.campsites["totalSites"]}</p>`);
+                //I need to check if the campsite in the JSON 
+                //retreived information has the words "Vault" or "Portable"
+                
+                //STOPPED HERE 5/31
+                //if (toiletType.includes("Vaulted") || toiletType.includes("Portable") 
 
-    } 
+                // check which of reservable, first_come and total_campsites
+                // are shown to the user
+                // total of 7 different options 
 
-}}}}}}}}
+                //3 of 3 - all true 
+                //show the reservable, first_come and total_campsites
+                if (reservable_campsites===true  && first_come_campsites===true 
+                    && total_campsites===true){
+                    
+                                                                                      
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
+                        <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>
+                        <p>Total campsites: ${parkName.campsites["totalSites"]}</p>`);
+
+    }                   
+                //2 of 3 true 
+                //show the reservable, first_come BUT NOT!!!! total_campsites
+                else if (reservable_campsites===true  && first_come_campsites===true 
+                    && total_campsites===false){
+                
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
+                        <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>`);
+    }
+
+                //2 of 3 true 
+                //show the reservable and total_campsites BUT NOT!!!!! first_come
+                else if (reservable_campsites===true  && first_come_campsites===false 
+                    && total_campsites===true){
+                                                     
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
+                        <p>Total campsites: ${parkName.campsites["totalSites"]}</p>`);                
+                    }
+
+                //2 of 3 true
+                //show the first_come and total_campsites BUT NOT!!!!! reservable
+                else if (reservable_campsites===false  && first_come_campsites===true 
+                    && total_campsites===true){
+                                        
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>
+                        <p>Total campsites: ${parkName.campsites["totalSites"]}</p>`);
+                    }
+
+                //1 of 3 true 
+                //show the reservable BUT NOT!!!! first_come and NOT!!!!total_campsites
+                else if (reservable_campsites===true  && first_come_campsites===false 
+                    && total_campsites===false){
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>`);
+
+                    }
+
+                // 1 of 3 true 
+                // show first_come BUT NOT!!!! reservable and NOT!!! toal_campsites
+                else if (reservable_campsites===false  && first_come_campsites===true 
+                    && total_campsites===false){
+                            
+                                                                                               
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>`);
+
+                            }
+        
+                 //1 of 3 true 
+                //total_campsites BUT NOT!!!! reservable and NOT!!! first_come
+                else if (reservable_campsites===false  && first_come_campsites===false 
+                    && total_campsites===true){
+                    
+                                                                                       
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        <p>Total campsites: ${parkName.campsites["totalSites"]}</p>`);
+        
+    }       
+                else {
+                document
+                    .querySelector('#campgrounds-go-here')
+                    .insertAdjacentHTML("beforeend", 
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>`);
+                }
+
+}}}}}}
 //debugger
 
 // //takes 
