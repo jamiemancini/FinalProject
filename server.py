@@ -1,6 +1,9 @@
 """Server for final project app."""
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect #webbrowser
+#imported additionally 06/31 - redirect and webbrowser(ERROR shows) in order
+#to redirect to a NPS campground site 
+#and open a new tab
 
 import requests
 
@@ -23,19 +26,18 @@ def search():
 
     return render_template ("search.html")
 
-@app.route('/search/search_results')
-def search_results():
-    """displays the specifc campsite selected"""
+@app.route('/campground/<campground_url>')
+def view_campground(campground_url):
+    """displays specific NPS campground webpage"""
 
-    return render_template ("search_results.html")
+    return redirect("campground_url", code=302)
 
-@app.route('/campground/<campground_id>')
-def view_campground(campground_id):
-    """passes through the campground id"""
+# @app.route('/campground/<campground_id>')
+# def view_campground(campground_id):
+#     """passes through the campground id"""
 
-    return campground_id
+#     return campground_id
 
-    
 
 @app.route('/search_state')
 def find_campgrounds():
