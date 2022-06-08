@@ -10,13 +10,26 @@
     to search California State and National Parks 
     and find their perfect camping destinations!</p>
 
-    <a id="create_account" href="/log_in">Log in</a>
-    <!-- I can usee css to style link as a button or use JS -->
- 
+
+    <h2>Log In</h2>
+    <form action="/log_in" method="POST">
+      <p>
+        Email <input type="text" placeholder="email" name="email">
+      </p>
+  
+      <p>
+        Password <input type="password" placeholder="password"  name="password">
+      </p>
+  
+      <p>
+        <input type="submit">
+      </p>
+    </form>
     <a id="create_account" href="/create_account">Create an account</a>
 
     <a id="direct_to_search" href="/search"> Search without an Account</a>
 
+    
 
 </body>
 </html>

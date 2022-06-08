@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, jsonify, redirect #webbrowser
 #imported additionally 06/31 - redirect and webbrowser(ERROR shows) in order
 #to redirect to a NPS campground site 
 #and open a new tab
-
+import crud
 import requests
 
 app = Flask(__name__)
@@ -20,23 +20,88 @@ def homepage():
     #homepage is where user logs-in or can create an account
     #sign-in with gmail or facebook option (is this an extra time thing?)
 
+#create a new user
+@app.route("/users", methods=["POST"])
+def register_user():
+    """Registers a new user to the db."""
+
+    first_name = request.form.get("first_name")
+    last_name=request.form.get("last_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+
+
+    user = crud.get_user_by_email(email)
+    #checking to see if the user already exists
+    if user:
+        flash("Cannot create an account with that email. Try again.")
+    else:
+        user = crud.create_user(first_name, last_name, email, password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Account created!")
+        
+    user = crud.get_user_by_id(user_id)
+
+
+    return render_template("user_account.html", user=user)
+
+
+
+@app.route("/log_in", methods=["POST"])
+def process_login():
+    """Process user login."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        flash("The email or password you entered was incorrect.")
+    else:
+        # Log in user by storing the user's email in session
+        session["user_email"] = user.email
+        flash(f"Welcome back, {user.email}!")
+
+    user_id = crud.get_user_id(email)
+
+    redirect ("/users/<user_id>", )
+
+@app.route("/users/<user_id>")
+def show_user(user_id):
+    """Show saved campsites and profile of a particular user."""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template("user_account.html", user=user)
+
+
+@app.route('/create_account')
+def create_account():
+    """create an account for the user"""
+
+    return render_template ("create_account.html")
+
 @app.route('/search')
 def search():
     """displays the search page with form"""
 
     return render_template ("search.html")
 
-@app.route('/campground/<campground_url>')
-def view_campground(campground_url):
-    """displays specific NPS campground webpage"""
+#ROUTE to the NPS web page of campsite
+# @app.route('/campground/<campground_url>')
+# def view_campground(campground_url):
+#     """displays specific NPS campground webpage"""
 
-    return redirect("campground_url", code=302)
+#     return redirect("campground_url", code=302)
 
-# @app.route('/campground/<campground_id>')
-# def view_campground(campground_id):
-#     """passes through the campground id"""
+#ROUTE to a new web page passing through the campground_id
+@app.route('/campground/<campground_id>')
+def view_campground(campground_id):
+    """passes through the campground id"""
 
-#     return campground_id
+    return campground_id
 
 
 @app.route('/search_state')

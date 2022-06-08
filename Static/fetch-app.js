@@ -121,16 +121,18 @@ function showResults(results) {
         document
         .querySelector('#campgrounds-go-here')
         .insertAdjacentHTML("beforeend", 
-                        `<li><a id="${parkName.name}" href="${parkName.url}" target="_blank">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
-                        
+                       
+                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
                         <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
                         <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>`);
     }
 
     //original specific search result was using the parkName.id from the JSON
 //06/02 - new thinking is link directly using parkName.url from the JSON
-//<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+//<li><a id="${parkName.name}" href="${parkName.url}" target="_blank">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
 
+//06/07 - changed back to original
+//<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
 
 
 
