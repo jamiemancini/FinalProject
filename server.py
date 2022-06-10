@@ -21,7 +21,7 @@ def homepage():
     #sign-in with gmail or facebook option (is this an extra time thing?)
 
 #create a new user
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["POST", "GET"])
 def register_user():
     """Registers a new user to the db."""
 
@@ -30,11 +30,10 @@ def register_user():
     email = request.form.get("email")
     password = request.form.get("password")
 
-
-
     user = crud.get_user_by_email(email)
     #checking to see if the user already exists
-    if user:
+    #if there is no email, is user = null??
+    if user: #True if user exists
         flash("Cannot create an account with that email. Try again.")
     else:
         user = crud.create_user(first_name, last_name, email, password)
@@ -42,19 +41,21 @@ def register_user():
         db.session.commit()
         flash("Account created!")
         
-    user = crud.get_user_by_id(user_id)
+    user_id = crud.get_user_id(email)
+    #use the functions in crud.py to find the user id
 
 
-    return render_template("user_account.html", user=user)
+    return redirect("/users/user_id", user_id=user_id)
 
 
 
-@app.route("/log_in", methods=["POST"])
+@app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
 
     email = request.form.get("email")
     password = request.form.get("password")
+    
 
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
@@ -64,9 +65,10 @@ def process_login():
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
 
-    user_id = crud.get_user_id(email)
 
-    redirect ("/users/<user_id>", )
+
+    redirect("/users/<user_id>", user_id=user.user_id)
+
 
 @app.route("/users/<user_id>")
 def show_user(user_id):
@@ -97,11 +99,14 @@ def search():
 #     return redirect("campground_url", code=302)
 
 #ROUTE to a new web page passing through the campground_id
-@app.route('/campground/<campground_id>')
+
+@app.route('/campground/<campground_id>/<user_id>')
 def view_campground(campground_id):
     """passes through the campground id"""
+    #how do I pass through the user_id as well?
+    #I think I need this to save to their user_page??
 
-    return campground_id
+    return render_template ("search_results.html", campground_id=campground_id)
 
 
 @app.route('/search_state')

@@ -17,10 +17,11 @@ def create_user(first_name,last_name, email, password):
 
 def get_user_by_email(email):
     """Return a user by email."""
-
+    print("*"*30)
+    print(email)
     return User.query.filter(User.email == email).first()
 
-def get_user_id(email):
+def get_user_by_id(email):
     """Return a user's id."""
 
     

@@ -43,6 +43,9 @@ class Rating(db.Model):
     review_description=db.Column(db.Text)
     review_score=db.Column(db.Integer)
 
+    campsite = db.relationship("CampingSite", backref="ratings")
+    user = db.relationship("User", backref="ratings")
+
     def __repr__(self):
         return f"<Rating user_id={self.user_id} camping_id{self.camping_id}> "
 
