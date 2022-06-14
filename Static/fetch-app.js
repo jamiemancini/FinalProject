@@ -122,7 +122,7 @@ function showResults(results) {
         .querySelector('#campgrounds-go-here')
         .insertAdjacentHTML("beforeend", 
                        
-                        `<li><a id="${parkName.name}" href="/campground/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
+                        `<li><a id="${parkName.name}" href="/${parkName.id}">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
                         <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
                         <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>`);
     }

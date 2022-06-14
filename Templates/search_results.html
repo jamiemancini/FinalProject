@@ -1,16 +1,18 @@
-<!-- on this page I need to display detailed results for the user about the -->
-
-
 {% extends 'base.html' %}
 
 {% block body %}
 
+<p id="campsite_id">{{campground_id}}</p>
+
 <h3>This page has information on a single campsite selected</h3>
 <div id="campsite_information"></div>
-<script src="static/fetch-app.js" defer></script>
 
 <div id="campsite_image"></div>
 <div id="campsite"></div>
 
-
+<div>
+    <meta id="campgroundResult" campground-id="{{ campground_id }}">
+    
+    <script src="http://localhost:5000/static/wecamp.js"></script>
+</div>
 {% endblock %}

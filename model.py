@@ -1,20 +1,34 @@
 """Models for Final Project WECamp"""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """A user"""
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
-    email = db.Column(db.String)
-    password=db.Column(db.String)
+    user_id = db.Column(db.Integer, 
+                            autoincrement=True, 
+                            primary_key=True,
+                            unique=True)
+
+    first_name = db.Column(db.String(50))
+    last_name = db.Column(db.String(50))
+    email = db.Column(db.String(120),
+                            unique=True)
+    password_hash=db.Column(db.String(130))
     
+    def set_password(self,password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
         return f"<User user_id={self.user_id} first_name={self.first_name} last_name={self.last_name}>"
 
