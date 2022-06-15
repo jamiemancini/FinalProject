@@ -3,6 +3,11 @@
 {% block body %}
 
 <p id="campsite_id">{{campground_id}}</p>
+<p id="user">{{user_id}}</p>
+<h2>Camground Url </h2>
+<a href="{{campground_data['data'][0]['url']}}">{{campground_data['data'][0]['url']}}</a>
+
+<p>{{campground_data}}</p>
 
 <h3>This page has information on a single campsite selected</h3>
 <div id="campsite_information"></div>
@@ -10,9 +15,8 @@
 <div id="campsite_image"></div>
 <div id="campsite"></div>
 
-<div>
-    <meta id="campgroundResult" campground-id="{{ campground_id }}">
+<!-- <div>
     
-    <script src="http://localhost:5000/static/wecamp.js"></script>
-</div>
+    <script src="static/wecamp.js"></script>
+</div> -->
 {% endblock %}

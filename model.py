@@ -27,7 +27,8 @@ class User(UserMixin, db.Model):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return self.password_hash == password
+        # return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return f"<User user_id={self.user_id} first_name={self.first_name} last_name={self.last_name}>"
@@ -83,4 +84,5 @@ if __name__ == "__main__":
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
 
-    connect_to_db(app)
+    connect_to_db(app) #do I need to add the name of the tables afterwards?
+    

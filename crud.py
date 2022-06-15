@@ -11,7 +11,7 @@ def create_user(first_name,last_name, email, password):
         first_name=first_name, 
         last_name=last_name, 
         email=email, 
-        password=password)
+        password_hash=password)
 
     return user
 
@@ -21,11 +21,10 @@ def get_user_by_email(email):
     print(email)
     return User.query.filter(User.email == email).first()
 
-def get_user_by_id(email):
-    """Return a user's id."""
+def get_user_by_id(user_id):
+    """Return a user by id."""
 
-    
-    return User.query.get(email).user_id()
+    return User.query.get(user_id)
 
 
 if __name__ == '__main__':
