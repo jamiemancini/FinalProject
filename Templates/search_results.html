@@ -2,21 +2,46 @@
 
 {% block body %}
 
-<p id="campsite_id">{{campground_id}}</p>
-<p id="user">{{user_id}}</p>
-<h2>Camground Url </h2>
-<a href="{{campground_data['data'][0]['url']}}">{{campground_data['data'][0]['url']}}</a>
 
-<p>{{campground_data}}</p>
+<p id="user_id">{{user_id}}</p>
 
-<h3>This page has information on a single campsite selected</h3>
-<div id="campsite_information"></div>
+    <h2>{{campground_data['data'][0]['name']}} </h2>
+    <form id="create_rating" action="/save_reviews" method="POST">
+        <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
+        <input type="text" id="description" name="description"> </input>
+        <select  id="score" name="score">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input type="submit">Add Review</input>
+    </form>    
+    </form>
+    <div id="NPS_campground_url">
+        <a href="{{campground_data['data'][0]['url']}}">Plan your Visit</a>
+    </div>
 
-<div id="campsite_image"></div>
-<div id="campsite"></div>
-
-<!-- <div>
+    <div id="NPS_campground_">
+        <a href="{{campground_data['data'][0]['reservationInfo']}}">Make reservations</a>
+    </div>
+    <div id="campsite_image"></div>
+        <h4>Images</h4>
+    <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400">
+    </div>
     
-    <script src="static/wecamp.js"></script>
-</div> -->
+    <div id="campsite_description">
+        <h4>Description</h4>    
+            <p>{{campground_data['data'][0]['description']}}</p>
+        </div>
+
+
+<div id="weather_overview">
+    <h4>Weather</h4>
+    <p>{{campground_data['data'][0]['weatherOverview']}}</p>
+</div>
+
+    
+
 {% endblock %}

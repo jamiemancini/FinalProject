@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, CampingSite, Rating, connect_to_db
+from model import db, User, Rating, connect_to_db
 
 
 #create a user with a password
@@ -23,9 +23,16 @@ def get_user_by_email(email):
 
 def get_user_by_id(user_id):
     """Return a user by id."""
-
     return User.query.get(user_id)
 
+def create_rating(user_id, camping_id,review_description, review_score):
+    """Creates a Rating"""
+    rating = Rating(
+            user_id=user_id,
+            camping_id=camping_id,
+            review_description=review_description,
+            review_score=review_score)
+    return rating
 
 if __name__ == '__main__':
     from server import app

@@ -168,6 +168,21 @@ def view_campground(campground_id):
 
     return render_template ("search_results.html", campground_id=campground_id, user_id=user_id, campground_data=data)
 
+@app.route('/save_reviews', methods = ["POST"])
+def save_review():
+    """creates a review by user"""
+    user_id = session.get("user_id", None)
+    campground_id=request.form.get("campground_id")
+    description=request.form.get("description")
+    score=request.form.get("score")
+    
+    rating = crud.create_rating(user_id,campground_id,description,score)
+
+    db.session.add(rating)
+    db.session.commit()
+
+    return redirect(f"/{campground_id}")
+
 
 
 @app.route('/search_campground')

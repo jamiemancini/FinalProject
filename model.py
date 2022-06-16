@@ -33,20 +33,6 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} first_name={self.first_name} last_name={self.last_name}>"
 
-
-class CampingSite(db.Model):
-    """Campsites in CA State Parks and NPS"""
-
-    __tablename__= "campsites"
-
-    camping_id=db.Column(db.Integer, autoincrement=True, primary_key=True)
-    park_name=db.Column(db.String)
-    campsite_name=db.Column(db.String)
-    park_type=db.Column(db.String)
-
-    def __repr__(self):
-        return f"<CampingSite camping_id={self.camping_id}  park_name={self.park_name}>"
-
 class Rating(db.Model):
     """User Rating of Campsites"""
 
@@ -54,11 +40,10 @@ class Rating(db.Model):
 
     rating_id=db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id= db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    camping_id=db.Column(db.Integer, db.ForeignKey("campsites.camping_id"))
+    camping_id=db.Column(db.String)
     review_description=db.Column(db.Text)
     review_score=db.Column(db.Integer)
 
-    campsite = db.relationship("CampingSite", backref="ratings")
     user = db.relationship("User", backref="ratings")
 
     def __repr__(self):
