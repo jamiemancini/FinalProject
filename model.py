@@ -47,7 +47,7 @@ class Rating(db.Model):
     user = db.relationship("User", backref="ratings")
 
     def __repr__(self):
-        return f"<Rating user_id={self.user_id} camping_id{self.camping_id}> "
+        return f"<Rating user_id={self.user_id} camping_id={self.camping_id} review: {self.review_description} score: {self.review_score}> "
 
 def connect_to_db(flask_app, db_uri="postgresql:///wecamp", echo=True):
     """connect to database"""

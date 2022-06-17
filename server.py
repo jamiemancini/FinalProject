@@ -123,13 +123,16 @@ def register_user():
 #     redirect("/users/<user_id>", user_id=user.user_id)
 
 
-@app.route("/users/<user_id>")
+@app.route("/users/<user_id>", methods=["POST", "GET"])
 def show_user(user_id):
     """Show saved campsites and profile of a particular user."""
 
     user = crud.get_user_by_id(user_id)
+    rating=crud.get_rating_by_user_id(user_id)
+    
     print(user)
-    return render_template("user_account.html", user=user)
+    print(rating)
+    return render_template("user_account.html", user=user, rating=rating)
 
 
 @app.route('/create_account')
@@ -144,18 +147,6 @@ def search():
     print("found user id: ", session.get('user_id', None))    
     return render_template("search.html")
 
-#ROUTE to the NPS web page of campsite
-# @app.route('/campground/<campground_url>')
-# def view_campground(campground_url):
-#     """displays specific NPS campground webpage"""
-
-#     return redirect("campground_url", code=302)
-
-#ROUTE to a new web page passing through the campground_id
-
-#06/10 - took out /campground/ because I was getting a 404 error
-#"GET /campground/static/wecamp.js HTTP/1.1" 404 -
-#I also removed it from fetch-app.js
 @app.route('/<campground_id>')
 def view_campground(campground_id):
     """passes through the campground id"""
@@ -164,9 +155,12 @@ def view_campground(campground_id):
     response = requests.get(url)
     data = response.json()
 
-    print("cambround data: ", data)
+    rating = crud.get_rating_by_camping_id(campground_id)
 
-    return render_template ("search_results.html", campground_id=campground_id, user_id=user_id, campground_data=data)
+    print("campground data: ", data)
+    print(rating)
+
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user_id=user_id, campground_data=data)
 
 @app.route('/save_reviews', methods = ["POST"])
 def save_review():
@@ -182,7 +176,6 @@ def save_review():
     db.session.commit()
 
     return redirect(f"/{campground_id}")
-
 
 
 @app.route('/search_campground')

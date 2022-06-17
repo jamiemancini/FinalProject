@@ -2,6 +2,7 @@
 
 {% block body %}
 
+<p>{{campground_id}}</p>
 
 <p id="user_id">{{user_id}}</p>
 
@@ -18,13 +19,13 @@
         </select>
         <input type="submit">Add Review</input>
     </form>    
-    </form>
+    
     <div id="NPS_campground_url">
         <a href="{{campground_data['data'][0]['url']}}">Plan your Visit</a>
     </div>
 
     <div id="NPS_campground_">
-        <a href="{{campground_data['data'][0]['reservationInfo']}}">Make reservations</a>
+        <a href="{{campground_data['data'][0]['reservationUrl']}}">Make reservations</a>
     </div>
     <div id="campsite_image"></div>
         <h4>Images</h4>
