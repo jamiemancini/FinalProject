@@ -38,12 +38,14 @@
     {% else %}
         <h2>{{campground_data['data'][0]['name']}}</h2>
     {% endif %}
+
 </div>
 
-{% if rating == [] %}
-    <p>Be the first to review this campsite!</p>
-{% else %}
-{% endif %}
+<div id="add_rating_by_user">
+    {% if rating == [] %}
+        <p>Be the first to review this campsite!</p>
+    {% else %}
+    {% endif %}
     
     <form id="create_rating" action="/save_reviews" method="POST">
         <h3>Camped here? Write a Review!</h3>
@@ -58,7 +60,9 @@
         </select>
         <input type="submit"></input>
     </form>    
-    
+</div>
+
+<div id = "add_review">
     <div id="NPS_campground_url">
         {% if campground_data['data'][0]['url'] == "" %}
             <p>No url provided</p>

@@ -22,6 +22,7 @@ API_KEY = os.environ['NPS_KEY']
 def homepage():
     """returns home page"""
     flash('Flash is working')
+    print("homepage route")
     return render_template ("homepage.html")
     
 
@@ -29,6 +30,7 @@ def homepage():
 def login_page():
     """returns login page"""
 
+    print("login route")
     return render_template('login-page.html')
 
 @login_manager.user_loader
@@ -41,7 +43,7 @@ def load_user(user_id):
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     """log user in and add user to session"""
-
+    
     email = request.form.get('email')
     print(email)
     password = request.form.get('password')
@@ -52,13 +54,13 @@ def login():
         if user.check_password(password) is True:
             print("verified user")
             session['user_id'] = user.user_id
-            print(user.user_id)
+            print(f"The user-id is: {user.user_id}")
             return redirect(f"/users/{user.user_id}")
         else:
             print(user.user_id)
             flash('Invalid password, please try again')
             print("did not verify user")
-            return redirect('/login-page.html')
+            return redirect('login-page.html')
 
     else:
         print("does not exist")
@@ -71,6 +73,7 @@ def login():
 def register_user():
    
     """Registers a new user to the db."""
+
     print("We are creating a user!")
     first_name = request.form.get("first_name")
     last_name=request.form.get("last_name")
@@ -103,8 +106,10 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
     rating=crud.get_rating_by_user_id(user_id)
     
-    print(user)
-    print(rating)
+    print("*********route to user's homepage")
+    print(f"The logged in user_id is: {user}")
+    print(f"The logged in ratings are: {rating}")
+    
     return render_template("user_account.html", user=user, rating=rating)
 
 
@@ -142,7 +147,7 @@ def view_campground(campground_id):
 
     print(data)
     
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user_id=user_id, campground_data=data)
 
 @app.route('/save_reviews', methods = ["POST"])
 def save_review():
@@ -153,11 +158,13 @@ def save_review():
     score=request.form.get("score")
     
     rating = crud.create_rating(user_id,campground_id,description,score)
+    print(rating)
 
     db.session.add(rating)
     db.session.commit()
 
-    return redirect(f"/{campground_id}")
+    flash('Review saved')
+    return redirect(f"/{campground_id}", description=desrciption, score=score)
 
 @app.route('/save_campsite', methods = ["POST"])
 def save_campsite():
@@ -180,7 +187,7 @@ def save_campsite():
 
 @app.route('/search_state')
 def find_campgrounds():
-    """Search for campgrounds on NPS"""
+    """Search for campgrounds on NPS by state"""
 
     state = request.args.get('state', '')
 
