@@ -1,11 +1,7 @@
-"""Server for final project app."""
+"""Server for wecamp final project app."""
 
 from model import User
 from flask import Flask, render_template, request, jsonify, redirect, session, flash 
-#webbrowser
-#imported additionally 06/31 - redirect and webbrowser(ERROR shows) in order
-#to redirect to a NPS campground site 
-#and open a new tab
 import os
 import crud
 import requests
@@ -25,13 +21,14 @@ API_KEY = os.environ['NPS_KEY']
 @app.route('/')
 def homepage():
     """returns home page"""
-    
+    flash('Flash is working')
     return render_template ("homepage.html")
     
 
 @app.route('/login_page')
 def login_page():
-    """Show login and create account page"""
+    """returns login page"""
+
     return render_template('login-page.html')
 
 @login_manager.user_loader
@@ -45,22 +42,21 @@ def load_user(user_id):
 def login():
     """log user in and add user to session"""
 
-    if current_user.is_authenticated:
-        return redirect ('/')
-
     email = request.form.get('email')
+    print(email)
     password = request.form.get('password')
-
+    print(password)
     user=crud.get_user_by_email(email)
 
     if user:
-        if user.check_password(password)==True:
-            # login_user(user)
+        if user.check_password(password) is True:
             print("verified user")
             session['user_id'] = user.user_id
+            print(user.user_id)
             return redirect(f"/users/{user.user_id}")
         else:
-            flash('Invalid password')
+            print(user.user_id)
+            flash('Invalid password, please try again')
             print("did not verify user")
             return redirect('/login-page.html')
 
@@ -82,16 +78,14 @@ def register_user():
     password_hash = request.form.get("password")
 
     user = crud.get_user_by_email(email)
-    #checking to see if the user already exists
-    #if there is no email, is user = null??
     
-    if user: #True if user exists
-        flash("Cannot create an account with that email. Try again.")
+    if user: 
+        flash('Cannot create an account with that email. Try again.')
     else:
         user = crud.create_user(first_name, last_name, email, password_hash)
         db.session.add(user)
         db.session.commit()
-        flash("Account created!")
+        flash('Account created!')
         
     user = crud.get_user_by_email(email)
     #use the functions in crud.py to find the user id
@@ -100,27 +94,6 @@ def register_user():
 
     return redirect(f"/users/{user.user_id}")
 
-
-#06/13 removed the following login because updated to using flask_login
-# @app.route("/login", methods=["POST"])
-# def process_login():
-#     """Process user login."""
-
-#     email = request.form.get("email")
-#     password = request.form.get("password")
-    
-
-#     user = crud.get_user_by_email(email)
-#     if not user or user.password != password:
-#         flash("The email or password you entered was incorrect.")
-#     else:
-#         # Log in user by storing the user's email in session
-#         session["user_email"] = user.email
-#         flash(f"Welcome back, {user.email}!")
-
-
-
-#     redirect("/users/<user_id>", user_id=user.user_id)
 
 
 @app.route("/users/<user_id>", methods=["POST", "GET"])
@@ -150,17 +123,26 @@ def search():
 @app.route('/<campground_id>')
 def view_campground(campground_id):
     """passes through the campground id"""
+
+
     user_id = session.get("user_id", None)
+
+    if user_id == None:
+        user_id = "Guest"
+    else:
+        user = crud.get_user_by_id(user_id)
+        print(user.first_name)
+        print(user.last_name)
+    
     url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit1&q={campground_id}&api_key={API_KEY}'
     response = requests.get(url)
     data = response.json()
-
+    
     rating = crud.get_rating_by_camping_id(campground_id)
 
-    print("campground data: ", data)
-    print(rating)
-
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user_id=user_id, campground_data=data)
+    print(data)
+    
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
 
 @app.route('/save_reviews', methods = ["POST"])
 def save_review():
@@ -177,21 +159,24 @@ def save_review():
 
     return redirect(f"/{campground_id}")
 
+@app.route('/save_campsite', methods = ["POST"])
+def save_campsite():
+    """saves campsite to their account"""
 
-@app.route('/search_campground')
-def find_campground_by_id(campground_id):
-    """Search for specific NPS campgrounds using its ID"""
+    user_id = request.form.get("user_id")
+    campground_id=request.form.get("campground_id")
+    trip_plans=request.form.get("trip_plans")
+    season=request.form.get("season")
+    print(season)
+    # rating = crud.create_rating(user_id,campground_id,description,score)
 
-    #campground_id = request.args.get('campground_id', '')
-    # state = request.args.get('state', '')
+    # db.session.add(rating)
+    # db.session.commit()
 
-    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit1&q={campground_id}&api_key={API_KEY}'
+    flash('Travel Ideas have been saved to your account!')
 
-    response = requests.get(url)
-    
-    data = response.json()
+    return print("testing this form")
 
-    return data
 
 @app.route('/search_state')
 def find_campgrounds():

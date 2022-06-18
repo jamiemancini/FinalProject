@@ -6,8 +6,47 @@
 
 <p id="user_id">{{user_id}}</p>
 
-    <h2>{{campground_data['data'][0]['name']}} </h2>
+
+<div id="check_user_id">
+    {% if user_id == "Guest" %}
+        <p>You must have an account to write a review</p>
+            <a id="create_account" href="/login_page">Login to your Account</a><br>
+            <a id="create_account" href="/create_account">Create an account</a><br>
+    {% else %}
+    <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
+    <form id="save_campsite" action="/save_campsite" method="POST">
+        <h3>Save this campsite to your account:</h3>
+        <input type="hidden" id="user_id" name="user_id" value="{{user_id}}"></input>
+        <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
+        <input type="text" id="trip_plans" name="trip_plans"> </input>
+        <select  id="season" name="season">
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
+            <option value="Anytime!">Anytime!</option>
+        </select>
+        <input type="submit"></input>
+    </form>
+    {% endif %}
+</div>
+
+
+<div id="NPS_campground_name">
+    {% if campground_data['data'][0]['name'] == "" %}
+        <p>Missing</p>
+    {% else %}
+        <h2>{{campground_data['data'][0]['name']}}</h2>
+    {% endif %}
+</div>
+
+{% if rating == [] %}
+    <p>Be the first to review this campsite!</p>
+{% else %}
+{% endif %}
+    
     <form id="create_rating" action="/save_reviews" method="POST">
+        <h3>Camped here? Write a Review!</h3>
         <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
         <input type="text" id="description" name="description"> </input>
         <select  id="score" name="score">
@@ -17,30 +56,51 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
-        <input type="submit">Add Review</input>
+        <input type="submit"></input>
     </form>    
     
     <div id="NPS_campground_url">
-        <a href="{{campground_data['data'][0]['url']}}">Plan your Visit</a>
+        {% if campground_data['data'][0]['url'] == "" %}
+            <p>No url provided</p>
+        {% else %}
+            <a href="{{campground_data['data'][0]['url']}}" target="_blank">Plan your Visit</a>
+        {% endif %}
     </div>
 
-    <div id="NPS_campground_">
-        <a href="{{campground_data['data'][0]['reservationUrl']}}">Make reservations</a>
+    <div id="NPS_reservations">
+        {% if campground_data['data'][0]['reservationUrl'] == "" %}
+            <p>No url provided</p>
+        {% else %}
+            <a href="{{campground_data['data'][0]['reservationUrl']}}" target="_blank">Make reservations </a>
+        {% endif %}
     </div>
-    <div id="campsite_image"></div>
+    
+    <div id="campsite_image">
+        {% if campground_data['data'][0]['images'][0]['url'] =="" %}
+            <p>No image provided</p>
+        {% else %}
         <h4>Images</h4>
-    <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400">
+            <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400">
+        {% endif %}
     </div>
     
     <div id="campsite_description">
-        <h4>Description</h4>    
-            <p>{{campground_data['data'][0]['description']}}</p>
-        </div>
+        {% if campground_data['data'][0]['description'] == "" %}
+            <p>No description provided</p>
+        {% else %}
+            <h4>Description</h4>    
+                <p>{{campground_data['data'][0]['description']}}</p>
+        {% endif %}
+    </div>
 
 
 <div id="weather_overview">
-    <h4>Weather</h4>
-    <p>{{campground_data['data'][0]['weatherOverview']}}</p>
+    {% if campground_data['data'][0]['weatherOverview'] == "" %}
+        <p>No weather overview provided</p>
+    {% else %}
+        <h4>Weather Overview</h4>
+            <p>{{campground_data['data'][0]['weatherOverview']}}</p>
+    {% endif %}
 </div>
 
     
