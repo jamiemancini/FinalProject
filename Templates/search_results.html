@@ -3,14 +3,18 @@
 {% block body %}
 
 <p>{{campground_id}}</p>
-
+<p>Here is rating: {{rating}}</p>
 <p id="user_id">{{user_id}}</p>
 
+{% if user_id == "Guest" %}
+{% else %}
+    <a id="link_to account" href="/users/{{user_id}}">User_account Link</a>
+{% endif %}
 
 <div id="check_user_id">
     {% if user_id == "Guest" %}
         <p>You must have an account to write a review</p>
-            <a id="create_account" href="/login_page">Login to your Account</a><br>
+            <a id="login-page" href="/login_page">Login to your Account</a><br>
             <a id="create_account" href="/create_account">Create an account</a><br>
     {% else %}
     <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
@@ -43,14 +47,20 @@
 
 <div id="add_rating_by_user">
     {% if rating == [] %}
-        <p>Be the first to review this campsite!</p>
+        <p>**Be the first to review this campsite!</p>
     {% else %}
+            <div id="show_all_reviews">
+                <p>Here's what other campers have to say:</p>
+                    {% for item in rating %}
+                        <li>Score: {{item.review_score}}.  {{item.review_description}}</li>
+                    {% endfor %}
+        </div>
     {% endif %}
     
     <form id="create_rating" action="/save_reviews" method="POST">
         <h3>Camped here? Write a Review!</h3>
         <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
-        <input type="text" id="description" name="description"> </input>
+        <input type="text" id="description" name="description" placeholder="Review"> </input>
         <select  id="score" name="score">
             <option value="1">1</option>
             <option value="2">2</option>

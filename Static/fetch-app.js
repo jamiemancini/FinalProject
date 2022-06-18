@@ -49,8 +49,8 @@ function showResults(results) {
     console.log(reservable_campsites);
     let first_come_campsites= document.querySelector('#first_come_campsites');
     console.log(first_come_campsites);
-    let total_campsites= document.querySelector('#total_campsites');
-    console.log(total_campsites);
+    // let total_campsites= document.querySelector('#total_campsites');
+    // console.log(total_campsites);
 
     // list condition to be filtering by
     let conditions = []

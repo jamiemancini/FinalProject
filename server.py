@@ -129,13 +129,15 @@ def search():
 def view_campground(campground_id):
     """passes through the campground id"""
 
-
     user_id = session.get("user_id", None)
+    print(f"THIS is the user's ID: {user_id}")
 
     if user_id == None:
         user_id = "Guest"
+        print(f"IF: THIS is the user's ID: {user_id}")
     else:
         user = crud.get_user_by_id(user_id)
+        print(f"THIS is the user: {user}")
         print(user.first_name)
         print(user.last_name)
     
@@ -147,7 +149,7 @@ def view_campground(campground_id):
 
     print(data)
     
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user_id=user_id, campground_data=data)
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
 
 @app.route('/save_reviews', methods = ["POST"])
 def save_review():
@@ -163,8 +165,8 @@ def save_review():
     db.session.add(rating)
     db.session.commit()
 
-    flash('Review saved')
-    return redirect(f"/{campground_id}", description=desrciption, score=score)
+    # flash('Review saved')
+    return redirect(f"/{campground_id}", user_id=user_id, description=description,score=score)
 
 @app.route('/save_campsite', methods = ["POST"])
 def save_campsite():
