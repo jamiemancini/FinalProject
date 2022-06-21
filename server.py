@@ -4,6 +4,7 @@ from model import User
 from flask import Flask, render_template, request, jsonify, redirect, session, flash 
 import os
 import crud
+from all_NPS import *
 import requests
 import json
 from model import connect_to_db, db
@@ -131,42 +132,52 @@ def view_campground(campground_id):
 
     user_id = session.get("user_id", None)
     print(f"THIS is the user's ID: {user_id}")
+    print(f"this is the campground ID {campground_id}")
 
     if user_id == None:
-        user_id = "Guest"
+        user = crud.create_user("Guest", "Guest", "Guest", "Guest")
         print(f"IF: THIS is the user's ID: {user_id}")
+    
+    
     else:
         user = crud.get_user_by_id(user_id)
         print(f"THIS is the user: {user}")
         print(user.first_name)
         print(user.last_name)
     
-    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit1&q={campground_id}&api_key={API_KEY}'
+    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit=1&q={campground_id}&api_key={API_KEY}'
     response = requests.get(url)
     data = response.json()
     
     rating = crud.get_rating_by_camping_id(campground_id)
 
     print(data)
+    # print(data['data'][0]['parkCode'])
+    park_name = find_park_name(data['data'][0]['parkCode'])
+    print(park_name)
     
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data, park_name=park_name)
 
-@app.route('/save_reviews', methods = ["POST"])
+@app.route('/save_reviews', methods = ["POST", "GET"])
 def save_review():
     """creates a review by user"""
     user_id = session.get("user_id", None)
+    print(user_id)
     campground_id=request.form.get("campground_id")
+    print(campground_id)
     description=request.form.get("description")
     score=request.form.get("score")
     
     rating = crud.create_rating(user_id,campground_id,description,score)
-    print(rating)
+    print(campground_id)
 
     db.session.add(rating)
     db.session.commit()
 
     # flash('Review saved')
-    return redirect(f"/{campground_id}", user_id=user_id, description=description,score=score)
+    return redirect(f"/{campground_id}")
+    
+    #, user_id=user_id, description=description,score=score, campground_id=campground_id)
 
 @app.route('/save_campsite', methods = ["POST"])
 def save_campsite():
@@ -193,7 +204,7 @@ def find_campgrounds():
 
     state = request.args.get('state', '')
 
-    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=100&api_key={API_KEY}'
+    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=650&api_key={API_KEY}'
 
     response = requests.get(url)
     
