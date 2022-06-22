@@ -10,6 +10,7 @@
 {% if user.email == "Guest" %}
 {% else %}
     <a id="link_to account" href="/users/{{user_id}}">User_account Link</a>
+    <a id="logout" href="/logout">Logout</a><br>
 {% endif %}
 
 <div id="check_user_id">
@@ -19,7 +20,7 @@
             <a id="create_account" href="/create_account">Create an account</a><br>
     {% else %}
     <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
-    <form id="save_campsite" action="/save_campsite" method="POST">
+    <!-- <form id="save_campsite" action="/save_campsite" method="POST">
         <h3>Save this campsite to your account:</h3>
         <input type="hidden" id="user_id" name="user_id" value="{{user_id}}"></input>
         <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
@@ -32,7 +33,7 @@
             <option value="Anytime!">Anytime!</option>
         </select>
         <input type="submit"></input>
-    </form>
+    </form> -->
     {% endif %}
 </div>
 

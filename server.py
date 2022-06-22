@@ -19,9 +19,18 @@ login_manager.login_view = '/login_page'
 
 API_KEY = os.environ['NPS_KEY']
 
+@app.route("/logout")
+@login_required
+def logout():
+    """logs out the user"""
+
+    logout_user()
+    return redirect("/")
+
 @app.route('/')
 def homepage():
     """returns home page"""
+
     flash('Flash is working')
     print("homepage route")
     return render_template ("homepage.html")
@@ -37,6 +46,7 @@ def login_page():
 @login_manager.user_loader
 def load_user(user_id):
     """Flask-Login function to retrieve id of user from session if any, and load user into memory"""
+    
     user=User.query.filter_by(user_id=user_id).first()
 
     return user
@@ -179,23 +189,23 @@ def save_review():
     
     #, user_id=user_id, description=description,score=score, campground_id=campground_id)
 
-@app.route('/save_campsite', methods = ["POST"])
-def save_campsite():
-    """saves campsite to their account"""
+# @app.route('/save_campsite', methods = ["POST"])
+# def save_campsite():
+#     """saves campsite to their account"""
 
-    user_id = request.form.get("user_id")
-    campground_id=request.form.get("campground_id")
-    trip_plans=request.form.get("trip_plans")
-    season=request.form.get("season")
-    print(season)
-    # rating = crud.create_rating(user_id,campground_id,description,score)
+#     user_id = request.form.get("user_id")
+#     campground_id=request.form.get("campground_id")
+#     trip_plans=request.form.get("trip_plans")
+#     season=request.form.get("season")
+#     print(season)
+#     # rating = crud.create_rating(user_id,campground_id,description,score)
 
-    # db.session.add(rating)
-    # db.session.commit()
+#     # db.session.add(rating)
+#     # db.session.commit()
 
-    flash('Travel Ideas have been saved to your account!')
+#     flash('Travel Ideas have been saved to your account!')
 
-    return print("testing this form")
+#     return print("testing this form")
 
 
 @app.route('/search_state')

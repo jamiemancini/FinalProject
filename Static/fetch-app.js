@@ -7,6 +7,7 @@ document.querySelector('#state-form').addEventListener('submit', (event) => {
 
     // state selected by the user   
     const stateSelected=document.querySelector('#US_state').value;
+    console.log(stateSelected)
     
     //endpoint of the NPS API
     const url = `http://localhost:5000/search_state?state=${stateSelected}`;
@@ -33,7 +34,7 @@ function showResults(results) {
 
     //maximum fee input
     let maxFeeSelected=Number(document.querySelector('#max_fees'));
-    console.log(maxFeeSelected);
+    console.log(maxFeeSelected.value);
     //to do: if the maximum price is left empty then it should show all the campsites
     
     //phone-reception type chosen
@@ -58,7 +59,7 @@ function showResults(results) {
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
             let fee = parkName.fees.find(fee => fee["cost"] !== "");
-            return fee["cost"] < maxFeeSelected.value || maxFeeSelected.value===0
+            return fee["cost"] < maxFeeSelected.value || maxFeeSelected.value===""
         });
     }
 
