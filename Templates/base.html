@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
+  
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,14 +20,21 @@
   
   </head>
 
-
   <body>
-    {% for message in get_flashed_messages() %}
-      <p>{{message}}</p>
-    {% endfor %}
+
+    {% include "components/navbar.html" %}
+
+  <div class="alert alert-success" role="alert">
+      {% for message in get_flashed_messages() %}
+          {{message}}
+      {% endfor %}
+  </div>
+
     {% block body %}
     
     {% endblock %}
+
+    
 
     <!-- Bootstrap JavaScript Bundle with Popper (a Bootstrap dependency for popovers) -->
     <script 

@@ -31,7 +31,7 @@ def logout():
 def homepage():
     """returns home page"""
 
-    flash('Flash is working')
+    flash('Welcome to the Homepage')
     print("homepage route")
     return render_template ("homepage.html")
     
@@ -63,20 +63,21 @@ def login():
 
     if user:
         if user.check_password(password) is True:
-            print("verified user")
+            print("Verified user, welcome back!")
             session['user_id'] = user.user_id
             print(f"The user-id is: {user.user_id}")
+            flash('Login completed')
             return redirect(f"/users/{user.user_id}")
         else:
             print(user.user_id)
-            flash('Invalid password, please try again')
+            flash('Invalid password, please try again.')
             print("did not verify user")
-            return redirect('login-page.html')
+            return redirect('login_page')
 
     else:
         print("does not exist")
-        flash('Sorry, this user does not exit.')
-        return redirect('login-page.html')
+        flash('Sorry, this user does not exit. Please try again')
+        return redirect('/login_page')
 
 
 
@@ -99,7 +100,7 @@ def register_user():
         user = crud.create_user(first_name, last_name, email, password_hash)
         db.session.add(user)
         db.session.commit()
-        flash('Account created!')
+        flash(f'Account created! Welcome {email}')
         
     user = crud.get_user_by_email(email)
     #use the functions in crud.py to find the user id
