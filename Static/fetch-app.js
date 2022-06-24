@@ -116,16 +116,26 @@ function showResults(results) {
         });
     });
 
+    function parkDetailHtml(parkData) {
+        let detailHtml = "";
+        if (parkData.fees.length > 0) {
+            detailHtml += `<li><a id="${parkData.name}" href="/${parkData.id}" target="_blank">${parkData.name}: $${parkData.fees[0]["cost"]} per night.</a></li>`
+        } else {
+            detailHtml += `<li><a id="${parkData.name}" href="/${parkData.id}" target="_blank">${parkData.name}:</a> No cost detail available</li>`;
+        }
+
+        detailHtml += `<p>Reservable campsites: ${parkData.numberOfSitesReservable}</p>
+                       <p>First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>`;
+
+        return detailHtml;
+    }
 
     for (const parkName of filtered_results) {
         console.log(parkName.url)
+        console.log(parkName)
         document
         .querySelector('#campgrounds-go-here')
-        .insertAdjacentHTML("beforeend", 
-                       
-                        `<li><a id="${parkName.name}" href="/${parkName.id}" target="_blank">${parkName.name}: $${parkName.fees[0]["cost"]} per night.</a></li>
-                        <p>Reservable campsites: ${parkName.numberOfSitesReservable}</p>
-                        <p>First Come campsites: ${parkName.numberOfSitesFirstComeFirstServe}</p>`);
+        .insertAdjacentHTML("beforeend", parkDetailHtml(parkName));
     }
 
 
