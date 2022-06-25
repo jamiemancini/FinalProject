@@ -215,11 +215,15 @@ def find_campgrounds():
 
     state = request.args.get('state', '')
 
-    url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=650&api_key={API_KEY}'
+    if state =='':
+        url = f'https://developer.nps.gov/api/v1/campgrounds?limit=650&api_key={API_KEY}'
+        response = requests.get(url)
+        data = response.json()
 
-    response = requests.get(url)
-    
-    data = response.json()
+    else:
+        url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=650&api_key={API_KEY}'
+        response = requests.get(url)
+        data = response.json()
 
     return data
 
