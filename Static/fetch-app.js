@@ -59,7 +59,7 @@ function showResults(results) {
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
             let fee = parkName.fees.find(fee => fee["cost"] !== "");
-            return fee["cost"] < maxFeeSelected.value || maxFeeSelected.value===""
+            return fee[0]["cost"] < maxFeeSelected.value || maxFeeSelected.value===""
         });
     }
 
@@ -116,16 +116,37 @@ function showResults(results) {
         });
     });
 
+
+
     function parkDetailHtml(parkData) {
+
         let detailHtml = "";
+
+        // checks for images url 
+        if (parkData.images.length>0) {
+            detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
+                            <img src="${parkData.images[0]['url']}" class="card-img-top rounded" alt="...">
+                            <div class="card-body">
+                            <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
+        }
+        else {
+            detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                            <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
+        }
+        
+        // checks for fees data
         if (parkData.fees.length > 0) {
-            detailHtml += `<li><a id="${parkData.name}" href="/${parkData.id}" target="_blank">${parkData.name}: $${parkData.fees[0]["cost"]} per night.</a></li>`
+            detailHtml += `<h6 class="card-subtitle mb-2 text-muted">$${parkData.fees[0]["cost"]} per night</h6>`;
         } else {
-            detailHtml += `<li><a id="${parkData.name}" href="/${parkData.id}" target="_blank">${parkData.name}:</a> No cost detail available</li>`;
+            detailHtml += `<h6 class="card-subtitle mb-2 text-muted">No cost detail available</h6>`;
         }
 
-        detailHtml += `<p>Reservable campsites: ${parkData.numberOfSitesReservable}</p>
-                       <p>First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>`;
+
+        detailHtml += `<p class="card-text">Reservable campsites: ${parkData.numberOfSitesReservable}</p>
+                        <p class="card-text">First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>
+                        <a href="/${parkData.id}" target="_blank" class="btn btn-primary">See Details</a></div>`;
 
         return detailHtml;
     }
