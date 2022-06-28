@@ -125,13 +125,13 @@ function showResults(results) {
         // checks for images url 
         if (parkData.images.length>0) {
             detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
-                            <img src="${parkData.images[0]['url']}" class="card-img-top rounded" alt="...">
+                            <img src="${parkData.images[0]['url']}" class="card_image card-img-top rounded" alt="...">
                             <div class="card-body">
                             <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
         }
         else {
             detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card-img-top" alt="...">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card__image card-img-top" alt="...">
                             <div class="card-body">
                             <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
         }

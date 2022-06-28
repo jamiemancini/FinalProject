@@ -34,7 +34,14 @@ def homepage():
     flash('Welcome to the Homepage')
     print("homepage route")
     return render_template ("homepage.html")
-    
+
+
+@app.route('/cards')
+def cards():
+    """returns a sample cards page"""
+
+    flash('Welcome to the cards page')
+    return render_template ("card_sample.html")
 
 @app.route('/login_page')
 def login_page():
@@ -114,9 +121,13 @@ def register_user():
 @app.route("/users/<user_id>", methods=["POST", "GET"])
 def show_user(user_id):
     """Show saved campsites and profile of a particular user."""
+    user_id = session.get("user_id", None)
 
-    user = crud.get_user_by_id(user_id)
-    rating=crud.get_rating_by_user_id(user_id)
+    if user_id==None:
+        return redirect('/')
+    else:
+        user = crud.get_user_by_id(user_id)
+        rating=crud.get_rating_by_user_id(user_id)
     
     print("*********route to user's homepage")
     print(f"The logged in user_id is: {user}")

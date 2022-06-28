@@ -2,16 +2,32 @@
 
 {% block body %}
 
-<h1>WeCamp</h1>
-<p>A web application that allows users 
-    to search California State and National Parks 
-    and find their perfect camping destinations!</p>
+<div class="container">
+    <div class="row justify-content-center">
+      <p></p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <div class="mb-3">
+            <h1>WeCamp</h1>
+            <p></p>
+            <p></p>
+            <p>A web application that allows users 
+                to search National Parks 
+                and find their perfect camping destinations!</p>
 
 
-    <a id="create_account" href="/login_page">Login to your Account</a><br>
+    <a class="btn btn-lg" role="button" id="create_account" href="/login_page">Login to your Account</a><br>
+                <p></p>
+    <a class="btn btn-lg" role="button" id="create_account" href="/create_account">Create an account</a><br>
+                <p></p>
+    <a class="btn btn-lg" role="button" id="direct_to_search" href="/search"> Search without an Account</a>
 
-    <a id="create_account" href="/create_account">Create an account</a><br>
-
-    <a id="direct_to_search" href="/search"> Search without an Account</a>
-
+</div>
+</div>
+    </div>
+  </div>
 {% endblock %}
