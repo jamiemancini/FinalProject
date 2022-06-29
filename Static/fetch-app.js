@@ -33,7 +33,7 @@ function showResults(results) {
     
 
     //maximum fee input
-    let maxFeeSelected=Number(document.querySelector('#max_fees'));
+    let maxFeeSelected=document.querySelector('#max_fees');
     console.log(maxFeeSelected.value);
     //to do: if the maximum price is left empty then it should show all the campsites
     
@@ -43,7 +43,7 @@ function showResults(results) {
     
     //toilet-type chosen
     let toilets=document.querySelector('input[name="toilet_type"]:checked');
-    console.log(toilets)
+    console.log(toilets);
 
     //types and # of campsites  
     let reservable_campsites= document.querySelector('#reservable_campsites');
@@ -59,7 +59,8 @@ function showResults(results) {
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
             let fee = parkName.fees.find(fee => fee["cost"] !== "");
-            return fee[0]["cost"] < maxFeeSelected.value || maxFeeSelected.value===""
+            console.log(fee['cost']);
+            return fee['cost'] < maxFeeSelected.value || maxFeeSelected.value===""
         });
     }
 
@@ -169,16 +170,5 @@ function showResults(results) {
             .querySelector("#search-number")
             .innerHTML=`found ${filtered_results.length} campgrounds`}
 
-    //loop through to find the names of each campground
-//     for (const parkName of results.data) {
-//             let name =parkName.name;
-//             let fees = parkName.fees[0]["cost"];
-//             let toiletType = parkName.amenities["toilets"][0];
-//             let cellPhoneReception = parkName.amenities["cellPhoneReception"];
-//             let reservableSites = parkName.numberOfSitesReservable;
-//             let firstServeSites = parkName.numberOfSitesFirstComeFirstServe;
-//             let totalCampsites = parkName.campsites["totalSites"];
-//             //let i=0; MAYBE: add a counter so that the user can see the total
-//             //number of results
 
 
