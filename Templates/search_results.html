@@ -136,6 +136,62 @@
 </div>
 
 
+<div class="container">
+<div class="row" data-masonry='{"percentPosition": true}' >
+
+
+<div class="col-12 col-md-6 col-lg-3">
+    <div class="card m-2 p-2">
+        <img src="" class="card-img-top" alt="..."/>
+            <div class="card-body">
+                <h5 class="card-title">MAIN TEMPLATE</h5>
+                <p class="card-text">Do Not Erase Yet</p>
+                <a href="#" class="btn btn=-primary"> Do Not ERASE  </a>
+            </div>
+    </div>
+</div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <h5 class="card-title">Description</h5>
+                    <p class="card-text">{{campground_data['data'][0]['description']}}</p>
+                </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="{{campground_data['data'][0]['images'][0]['url']}}" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <p class="card-text">Campground Image</p><a href="# class="btn btn=-primary"> Click Here </a>
+                </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <a href="{{campground_data['data'][0]['url']}}" class="btn btn=-primary" target="_blank"> Plan Your Visit </a>
+                </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <h5 class="card-title">Weather Overview</h5>
+                    <p class="card-text">{{campground_data['data'][0]['weatherOverview']}}</p>
+                </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
 
     
 

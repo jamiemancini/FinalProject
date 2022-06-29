@@ -164,7 +164,7 @@ function showResults(results) {
     //create the header that appears once the search results appear
         document
             .querySelector('#campgrounds_header')
-            .innerHTML="Campground Results";
+            .innerHTML="Scroll down for Campground Results";
 
         document
             .querySelector("#search-number")
