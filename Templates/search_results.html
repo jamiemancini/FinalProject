@@ -2,24 +2,34 @@
 
 {% block body %}
 
-<p>{{campground_id}}</p>
+<!-- <p>{{campground_id}}</p>
 
 <p>Here is rating: {{rating}}</p>
-<p id="user_id">{{user_id}}: {{user.email}}</p>
+<p id="user_id">{{user_id}}: {{user.email}}</p> -->
+<div class="container">
+    <div class="row justify-content-center">
+      <p></p>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="mb-3">
+            <div id="check_user_id">
+                {% if user.email == "Guest" %}
+                    <p>Create or Login to your account to save this campsite to your travel journal</p>
+                        <a id="login-page" href="/login_page">Login to an account</a><br>
+                        <a id="create_account" href="/create_account">Create an account</a><br>
+                {% else %}
+                <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-{% if user.email == "Guest" %}
-{% else %}
-    <a id="link_to account" href="/users/{{user_id}}">User_account Link</a>
-    <a id="logout" href="/logout">Logout</a><br>
-{% endif %}
-
-<div id="check_user_id">
-    {% if user.email == "Guest" %}
-        <p>Create or Login to your account to save this campsite to your travel journal</p>
-            <a id="login-page" href="/login_page">Login to an account</a><br>
-            <a id="create_account" href="/create_account">Create an account</a><br>
-    {% else %}
-    <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
     <!-- <form id="save_campsite" action="/save_campsite" method="POST">
         <h3>Save this campsite to your account:</h3>
         <input type="hidden" id="user_id" name="user_id" value="{{user_id}}"></input>
@@ -34,25 +44,25 @@
         </select>
         <input type="submit"></input>
     </form> -->
-    {% endif %}
-</div>
+  
+ 
 
 
-<div id="NPS_campground_name">
-    {% if campground_data['data'][0]['name'] == "" %}
-        <p>Missing</p>
-    {% else %}
-        <h2>{{campground_data['data'][0]['name']}}</h2>
-    {% endif %}
-</div>
-
-<div id="park_code">
-    {% if campground_data['data'][0]['parkCode'] == "" %}
-        <p>Missing</p>
-    {% else %}
-        <h2>{{park_name}}</h2>
-    {% endif %}
-</div>
+    <!-- <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div class="mb-3">
+                    <div id="park_code">
+                        {% if campground_data['data'][0]['parkCode'] == "" %}
+                            <p>Missing</p>
+                        {% else %}
+                            <h2>{{park_name}}</h2>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
 <div id="add_rating_by_user">
     {% if rating == [] %}
@@ -63,10 +73,11 @@
                     {% for item in rating %}
                         <li>Score: {{item.review_score}}.  {{item.review_description}}</li>
                     {% endfor %}
-        </div>
+            </div>
     {% endif %}
+</div>
 
-<div id = "add_review">
+<!-- <div id = "add_review">
     <form id="create_rating" action="/save_reviews" method="POST">
         <h3>Camped here? Write a Review!</h3><br>
         <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
@@ -80,9 +91,9 @@
         </select>
         <input type="submit"></input>
     </form>    
-</div>
+</div> -->
 
-<div id="google_links"> 
+<!-- <div id="google_links"> 
     {% if campground_data['data'][0]['directionsUrl'] == "" %}
         <p>No google links provided</p>
     {% elif campground_data['data'][0]['url'] == campground_data['data'][0]['directionsUrl'] %}
@@ -90,7 +101,8 @@
     {% else %}
     <a href="{{campground_data['data'][0]['directionsUrl']}}" target="_blank">Additional Map and Photos</a>
     {% endif %}
-
+</div> -->
+<!-- 
     <div id="NPS_campground_url">
         {% if campground_data['data'][0]['url'] == "" %}
             <p>No url provided</p>
@@ -105,44 +117,84 @@
         {% else %}
             <a href="{{campground_data['data'][0]['reservationUrl']}}" target="_blank">Make reservations </a>
         {% endif %}
-    </div>
+    </div> -->
     
-    <div id="campsite_image">
+    <!-- <div id="campsite_image">
         {% if campground_data['data'][0]['images'][0]['url'] =="" %}
             <p>No image provided</p>
         {% else %}
         <h4>Images</h4>
             <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400">
         {% endif %}
-    </div>
+    </div> -->
     
-    <div id="campsite_description">
+    <!-- <div id="campsite_description">
         {% if campground_data['data'][0]['description'] == "" %}
             <p>No description provided</p>
         {% else %}
             <h4>Description</h4>    
                 <p>{{campground_data['data'][0]['description']}}</p>
         {% endif %}
-    </div>
+    </div> -->
 
 
-<div id="weather_overview">
+<!-- <div id="weather_overview">
     {% if campground_data['data'][0]['weatherOverview'] == "" %}
         <p>No weather overview provided</p>
     {% else %}
         <h4>Weather Overview</h4>
             <p>{{campground_data['data'][0]['weatherOverview']}}</p>
     {% endif %}
-</div>
+</div> -->
 
+<p>cards start here</p>
 
 <div class="container">
 <div class="row" data-masonry='{"percentPosition": true}' >
 
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="https://i.ibb.co/yy9nf4H/Camping-bag-clip-art-camping-clipart-black-and-white.jpg" width="400" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <div id="NPS_reservations">
+                        {% if campground_data['data'][0]['url'] == "" %}
+                        <a href="https://www.nps.gov/findapark/index.htm" class="btn btn=-primary" target="_blank">Visit NPS.gov to plan your trip </a>
+                        {% else %}
+                        <a href="{{campground_data['data'][0]['url']}}" class="btn btn=-primary" target="_blank">Visit NPS.gov to plan your trip </a>
+                        {% endif %}
+                    </div>
+                   
+                </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+                <div class="card-body">
+                    <div id = "add_review">
+                        <form id="create_rating" action="/save_reviews" method="POST">
+                            <h5 class="card-title">Camped here? Write a Review!</h5>
+                            <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
+                            <input class="card-text" type="text" id="description" name="description" placeholder="Review"> </input>
+                            <p></p>
+                            <select class="card-text"  id="score" name="score">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <input class="btn btn=-primary" type="submit"></input>
+                        </form>    
+                    </div>
+                </div>
+        </div>
+    </div>
+
 
 <div class="col-12 col-md-6 col-lg-3">
     <div class="card m-2 p-2">
-        <img src="" class="card-img-top" alt="..."/>
+        <img src="https://i.ibb.co/3fcp2vx/apps-16894-c02476d2-2378-4f60-8290-b6d4b3842643-79a2ef6a-4775-4c79-8d93-9caf077660eb.png" class="card-img-top" alt="..."/>
             <div class="card-body">
                 <h5 class="card-title">MAIN TEMPLATE</h5>
                 <p class="card-text">Do Not Erase Yet</p>
@@ -151,43 +203,138 @@
     </div>
 </div>
 
+
+<div class="col-12 col-md-6 col-lg-3">
+    <div class="card m-2 p-2">
+            <div class="card-body">
+                <div id="NPS_campground_name" >
+                    {% if campground_data['data'][0]['name'] == "" %}
+                    {% else %}
+                        <h4 class="card-title">{{campground_data['data'][0]['name']}}</h4>
+                        <div id="park_code">
+                            {% if campground_data['data'][0]['parkcode'] == "" %}
+                            {% else %}
+                                <h5 class="card-text">{{park_name}}</h5>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+</div>
+
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card m-2 p-2">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card-img-top" alt="..."/>
                 <div class="card-body">
-                    <h5 class="card-title">Description</h5>
-                    <p class="card-text">{{campground_data['data'][0]['description']}}</p>
+                    <div id="campsite_description">
+                        {% if campground_data['data'][0]['description'] == "" %}
+                        <h5 class="card-title">“A national park is not a playground. 
+                            It’s a sanctuary for nature and for humans 
+                            who will accept nature on nature’s own terms.”</h5>
+                            <p class="card-text">- Michael Frome
+                        {% else %}
+                        <img src="https://i.ibb.co/0FsFQQG/70428-262-rm-010-c-lg.gif" width ="300" class="card-img-top" alt="..."/>
+                        <p></p>    
+                        <h5 class="card-title">Description</h5>   
+                            <p class="card-text">{{campground_data['data'][0]['description']}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+            <img src="https://i.ibb.co/3zcdGfh/665525973.jpg" width="400" class="card-img-top" alt="..."/>
+                <div class="card-body">
+                    <div id="NPS_reservations">
+                        {% if campground_data['data'][0]['reservationUrl'] == "" %}
+                            <p>No link provided by NPS</p>
+                        {% else %}
+                            <a href="{{campground_data['data'][0]['reservationUrl']}}" class="btn btn=-primary" target="_blank">Make reservations </a>
+                        {% endif %}
+                    </div>
+                   
                 </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card m-2 p-2">
-            <img src="{{campground_data['data'][0]['images'][0]['url']}}" class="card-img-top" alt="..."/>
                 <div class="card-body">
-                    <p class="card-text">Campground Image</p><a href="# class="btn btn=-primary"> Click Here </a>
+                    <div id="weather_overview">
+                        {% if campground_data['data'][0]['weatherOverview'] == "" %}
+                            <h5 class="card-title">“In wilderness is the preservation of the world.</h5>
+                            <p class="card-text">- Henry David Thoreau</p>
+                        {% else %}
+                            <img src="https://i.ibb.co/3fcp2vx/apps-16894-c02476d2-2378-4f60-8290-b6d4b3842643-79a2ef6a-4775-4c79-8d93-9caf077660eb.png" width ="400" class="card-img-top" alt="..."/>
+                            <p></p>
+                            <p class="card-text">{{campground_data['data'][0]['weatherOverview']}}</p>
+                        {% endif %}
+                    </div>
+                    
                 </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card m-2 p-2">
-            <img src="" class="card-img-top" alt="..."/>
                 <div class="card-body">
-                    <a href="{{campground_data['data'][0]['url']}}" class="btn btn=-primary" target="_blank"> Plan Your Visit </a>
+                            <div id="campsite_image">
+                                {% if campground_data['data'][0]['images'][0]['url'] =="" %}
+                                <h5 class="card-title">“There is nothing so American as our national parks…. 
+                                    The fundamental idea behind the parks…
+                                    is that the country belongs to the people, 
+                                    that it is in process of making for the 
+                                    enrichment of the lives of all of us.”</h5>
+                                <p class="card-text">- President Roosevelt</p>
+                                {% else %}
+                                <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400" class="card-img-top" alt="..."/>
+                                <p class="card-title">Campground Image</p>
+                                {% endif %}
+                            </div>
                 </div>
         </div>
     </div>
 
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card m-2 p-2">
-            <img src="" class="card-img-top" alt="..."/>
                 <div class="card-body">
-                    <h5 class="card-title">Weather Overview</h5>
-                    <p class="card-text">{{campground_data['data'][0]['weatherOverview']}}</p>
+                            <div id="campsite_image">
+                                {% if campground_data['data'][0]['images'][1]['url'] =="" %}
+                                <h5 class="card-title">“Climb the mountains and get their good tidings. 
+                                    Nature’s peace will flow into you as sunshine into trees.”</h5>
+                                <p class="card-text"> – John Muir</p>
+                                {% else %}
+                                <img src="{{campground_data['data'][0]['images'][1]['url']}}" width ="400" class="card-img-top" alt="..."/>
+                                <p class="card-title">Campground Image</p>
+                                {% endif %}
+                            </div>
                 </div>
         </div>
     </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+        <div class="card m-2 p-2">
+                <div class="card-body">
+                            <div id="campsite_image">
+                                {% if campground_data['data'][0]['images'][2]['url'] =="" %}
+                                <h5 class="card-title">"The scenic ideals that surround even our national
+                                     parks are carriers of a nostalgia for heavenly bliss and eternal calmness.</h5>
+                                <p class="card-text"> – Robert Smithson</p>
+                                {% else %}
+                                <img src="{{campground_data['data'][0]['images'][2]['url']}}" width ="400" class="card-img-top" alt="..."/>
+                                <p class="card-title">Campground Image</p>
+                                {% endif %}
+                            </div>
+                </div>
+        </div>
+    </div>
+    
+    
+    
+
 
 
 </div>

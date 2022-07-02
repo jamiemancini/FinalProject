@@ -59,7 +59,8 @@ function showResults(results) {
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
             let fee = parkName.fees.find(fee => fee["cost"] !== "");
-            console.log(fee['cost']);
+            console.log(fee);
+            console.log(parkName.name)
             return fee['cost'] < maxFeeSelected.value || maxFeeSelected.value===""
         });
     }
@@ -147,6 +148,7 @@ function showResults(results) {
 
         detailHtml += `<p class="card-text">Reservable campsites: ${parkData.numberOfSitesReservable}</p>
                         <p class="card-text">First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>
+                        <p class="card-text">${parkData.id}</p>
                         <a href="/${parkData.id}" target="_blank" class="btn btn-primary">See Details</a></div>`;
 
         return detailHtml;
