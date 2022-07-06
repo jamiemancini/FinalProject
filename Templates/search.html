@@ -2,17 +2,34 @@
 
 {% block body %}
 
+<style>
+  #intro {
+    background-image: url("https://i.ibb.co/fCsxcDd/CAMPING.jpg");
+    height: 70vh;
+    background-position: center center;
+    background-size:cover;
+  }
+  
+</style>
 
-<div class="container">
-    <div class="row justify-content-center">
+<div id="intro" class="bg-image shadow-2-strong">
+
+  <div class="container">
+    <div class="row h-100 justify-content-center">
+      <p></p>
+      <p></p>
+      <p></p>
       <p></p>
     </div>
   </div>
+
+<div class="container col-8 p-2 border border-warning bg-light">
   
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-10">
         <div class="mb-3">
+          <p></p>
             <h1>Search the National Parks</h1>
         </div>
       </div>
@@ -25,11 +42,14 @@
           <div class="col-10">
                 <p>There are 400 National Park Campsites in the United States.  
                 Add search parameters to find a campsite that meets your needs.
-                    All search parameters are optional.
                 </p>
             </div>
         </div>
     </div>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-10">
 
     <div id = "form">
         <form id="state-form" >
@@ -41,9 +61,9 @@
           <div class="card">
             <div class="card-body">
                 
-                <label class="card-title" for="state">Choose a State</label>
-              <select id="US_state" name="state" class="form-control form-control-lg">
-                  <option selected disabled>--select state-- </option>
+                <label class="card-title required" for="state">Choose a State</label>
+              <select required aria-required="true" id="US_state" name="state" class="form-control form-control-lg"/>
+                  <!-- <option selected disabled>--select state-- </option> -->
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -170,9 +190,12 @@
       </div>
     
 
-        <input class="btn btn-lg" role="button"  type="submit" >
+        <input class="btn btn-lg p-3" role="button"  type="submit" >
     </form>
 </div>
+        </div>
+      </div>
+    </div>
 
 <br></br> 
 
@@ -190,6 +213,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
       <script src="static/fetch-app.js" defer></script>

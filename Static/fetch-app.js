@@ -58,9 +58,11 @@ function showResults(results) {
     
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
-            let fee = parkName.fees.find(fee => fee["cost"] !== "");
+            let fee = parkName.fees.find(fee => fee !== []);
+            console.log(parkName.fees.length);
             console.log(fee);
-            console.log(parkName.name)
+            console.log(fee['cost']);
+            console.log(parkName.name);
             return fee['cost'] < maxFeeSelected.value || maxFeeSelected.value===""
         });
     }
@@ -94,22 +96,23 @@ function showResults(results) {
     }
     if (reservable_campsites.checked) {
         conditions.push(function(parkName) {
-            return parkName.numberOfSitesReservable !== "0"
+            return parkName.numberOfSitesReservable !== "0";
         })
     }
 
     if (first_come_campsites.checked) {
         conditions.push(function(parkName) {
             return parkName.numberOfSitesFirstComeFirstServe !== "0"
+
         })
 
     }
     
-    if (total_campsites.checked) {
-        conditions.push(function(parkName) {
-            return parkName.campsites["totalSites"] !== "0"
-        })
-    }
+    // if (total_campsites.checked) {
+    //     conditions.push(function(parkName) {
+    //         return parkName.campsites["totalSites"] !== "0"
+    //     })
+    // }
 
     // all the conditions
     let filtered_results = results.data.filter(function(parkName) {
@@ -149,7 +152,7 @@ function showResults(results) {
         detailHtml += `<p class="card-text">Reservable campsites: ${parkData.numberOfSitesReservable}</p>
                         <p class="card-text">First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>
                         <p class="card-text">${parkData.id}</p>
-                        <a href="/${parkData.id}" target="_blank" class="btn btn-primary">See Details</a></div>`;
+                        <a href="/${parkData.id}" target="_blank" class="btn btn-lg">See Details</a></div>`;
 
         return detailHtml;
     }

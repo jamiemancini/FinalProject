@@ -2,6 +2,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Palatino", serif;
 }
 
+.required:after {
+  content:" *";
+  color:red;
+}
+
+.navbar-brand {
+  color: #6a4b2b;
+}
 
 body {
   font-family: "Arial", sans-serif;;
@@ -10,8 +18,21 @@ body {
     color: #6a4b2b;
   }
 
-  .btn {
+.btn {
     background-color: #CCD5AE;
+    outline-color: #D4A373;
+    padding: 2px;
+  }
+
+  .btn:active {
+    background-color: #D4A373;
+    color: #FEFAE0;
+  }
+
+  .btn:hover {
+    background-color:#D4A373;
+    color: #FEFAE0;
+    transition: 0.7s;
   }
 
 .alert {
@@ -35,6 +56,10 @@ body {
     box-sizing: border-box;
     margin: auto;
     padding: auto;
+}
+
+.btn:active {
+  outline-color: #64968c;
 }
 
 .card__image {

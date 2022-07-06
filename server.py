@@ -92,29 +92,35 @@ def login():
 def register_user():
    
     """Registers a new user to the db."""
-
-    print("We are creating a user!")
-    first_name = request.form.get("first_name")
-    last_name=request.form.get("last_name")
-    email = request.form.get("email")
-    password_hash = request.form.get("password")
-
-    user = crud.get_user_by_email(email)
     
-    if user: 
-        flash('Cannot create an account with that email. Try again.')
-    else:
-        user = crud.create_user(first_name, last_name, email, password_hash)
-        db.session.add(user)
-        db.session.commit()
-        flash(f'Account created! Welcome {email}')
-        
-    user = crud.get_user_by_email(email)
-    #use the functions in crud.py to find the user id
-    print("user_id: ", user.user_id)
-    session['user_id'] = user.user_id
 
-    return redirect(f"/users/{user.user_id}")
+    if request.form.get("password") != request.form.get("password1"):
+        print("Passwords don't match")
+        flash('Your passwords did not match.')
+        return redirect('/create_account')
+    else:
+        print("We are creating a user!")
+        first_name = request.form.get("first_name")
+        last_name=request.form.get("last_name")
+        email = request.form.get("email")
+        password_hash = request.form.get("password")
+
+        user = crud.get_user_by_email(email)
+        
+        if user: 
+            flash('Cannot create an account with that email. Try again.')
+        else:
+            user = crud.create_user(first_name, last_name, email, password_hash)
+            db.session.add(user)
+            db.session.commit()
+            flash(f'Account created! Welcome {email}')
+            
+        user = crud.get_user_by_email(email)
+        #use the functions in crud.py to find the user id
+        print("user_id: ", user.user_id)
+        session['user_id'] = user.user_id
+
+        return redirect(f"/users/{user.user_id}")
 
 
 
@@ -122,13 +128,14 @@ def register_user():
 def show_user(user_id):
     """Show saved campsites and profile of a particular user."""
     user_id = session.get("user_id", None)
+    user = crud.get_user_by_id(user_id)
 
-    if user_id==None:
+    if user_id is None or user.first_name is None:
         return redirect('/')
-    else:
-        user = crud.get_user_by_id(user_id)
-        rating=crud.get_rating_by_user_id(user_id)
     
+    user = crud.get_user_by_id(user_id)
+    rating=crud.get_rating_by_user_id(user_id)
+
     print("*********route to user's homepage")
     print(f"The logged in user_id is: {user}")
     print(f"The logged in ratings are: {rating}")
