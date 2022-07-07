@@ -25,13 +25,15 @@ def logout():
     """logs out the user"""
 
     logout_user()
+    session.pop("user, None")
+    flash('You have sucessfully logged out.  Goodbye!', "info")
     return redirect("/")
 
 @app.route('/')
 def homepage():
     """returns home page"""
 
-    flash('Welcome to the Homepage')
+    flash('Welcome to the Homepage', "info")
     print("homepage route")
     return render_template ("homepage.html")
 
@@ -73,17 +75,17 @@ def login():
             print("Verified user, welcome back!")
             session['user_id'] = user.user_id
             print(f"The user-id is: {user.user_id}")
-            flash('Login completed')
+            flash('Login completed.  Welcome back!', "success")
             return redirect(f"/users/{user.user_id}")
         else:
             print(user.user_id)
-            flash('Invalid password, please try again.')
+            flash(f"Invalid password, please try again.", "warning")
             print("did not verify user")
             return redirect('login_page')
 
     else:
         print("does not exist")
-        flash('Sorry, this user does not exit. Please try again')
+        flash('Sorry, this user does not exit. Please try again', "warning")
         return redirect('/login_page')
 
 
@@ -96,7 +98,7 @@ def register_user():
 
     if request.form.get("password") != request.form.get("password1"):
         print("Passwords don't match")
-        flash('Your passwords did not match.')
+        flash('Your passwords did not match.', "warning")
         return redirect('/create_account')
     else:
         print("We are creating a user!")
@@ -108,12 +110,12 @@ def register_user():
         user = crud.get_user_by_email(email)
         
         if user: 
-            flash('Cannot create an account with that email. Try again.')
+            flash('Cannot create an account with that email. Try again.', "warning")
         else:
             user = crud.create_user(first_name, last_name, email, password_hash)
             db.session.add(user)
             db.session.commit()
-            flash(f'Account created! Welcome {email}')
+            flash(f'Account created! Welcome {email}', "success")
             
         user = crud.get_user_by_email(email)
         #use the functions in crud.py to find the user id
@@ -165,12 +167,12 @@ def view_campground(campground_id):
 
     if user_id == None:
         user = crud.create_user("Guest", "Guest", "Guest", "Guest")
-        print(f"IF: THIS is the user's ID: {user_id}")
+        flash("You are not logged into an account.", "warning")
     
     
     else:
         user = crud.get_user_by_id(user_id)
-        print(f"THIS is the user: {user}")
+        flash(f"Hi! Camper {user.first_name} {user.last_name}!", "success")
         print(user.first_name)
         print(user.last_name)
     

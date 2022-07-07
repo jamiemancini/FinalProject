@@ -1,18 +1,39 @@
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Palatino", serif;
+  font-family: "Arial", sans-serif;
 }
 
 .required:after {
   content:" *";
-  color:red;
+  color:#e07a5f;
 }
 
 .navbar-brand {
   color: #6a4b2b;
 }
 
+.alert-success {
+  background-color: #81b29a;
+  color:#f7ede2;
+}
+
+.alert-info {
+  background-color: #faedcd;
+  color:#6a4b2b;
+}
+
+.alert-warning {
+  background-color: #e07a5f;
+  color: #f7ede2;
+}
+
+.border-warning {
+  outline-color: #faedcd;
+}
+
+
+
 body {
-  font-family: "Arial", sans-serif;;
+  font-family: "Arial", sans-serif;
     font-size: 18px;
     background-color: #FEFAE0;
     color: #6a4b2b;
@@ -36,9 +57,10 @@ body {
   }
 
 .alert {
-  padding: 20px;
+  padding: 10px;
+  margin: 0px;
   padding-left: 50px;
-}
+} 
 
 .cards {
 

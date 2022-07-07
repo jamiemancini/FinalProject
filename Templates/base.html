@@ -23,11 +23,13 @@
   <body>
 
 
-  <div class="alert alert-success" role="alert">
-      {% for message in get_flashed_messages() %}
-          {{message}}
+  
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="alert alert-{{category}}"  
+            role="alert">{{ message }}
+      </div>
       {% endfor %}
-  </div>
+  
 
     {% block body %}
     
