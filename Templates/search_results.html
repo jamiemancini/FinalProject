@@ -5,7 +5,7 @@
 
 <style>
     #intro {
-      background-image: url("/static/img/NPS_SEARCH-RESULS.jpg");
+      background-image: url("/static/img/NPS_OPTION.jpg");
       height: 80vh;
       background-position: center center;
       background-size:cover;
@@ -42,7 +42,7 @@
     </div>
   </div>
   
-  <div class="container">
+  <!-- <div class="container">
     <div class="row justify-content-center">
       <div class="col-10">
         <div class="mb-3">
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
     <!-- <form id="save_campsite" action="/save_campsite" method="POST">
         <h3>Save this campsite to your account:</h3>
@@ -258,7 +258,9 @@
                             <h2 class="card-title text-center"> Write  <img src="https://i.ibb.co/dg2Lrqs/STARS-write.png" 
                                 alt="" height="60" class="card-image"></h2>
                                 <h2 class="card-title text-xl-center">a Review!</h2>
-                            <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
+                                <input type="hidden" id="camp_name" name="camp_name" value="{{campground_data['data'][0]['name']}}"></input>
+                                <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
+                            
                             <input class="card-text w-90" type="text" id="description" name="description" placeholder="Review" required> </input>
                             
                             <select class="card-text"  id="score" name="score" required>

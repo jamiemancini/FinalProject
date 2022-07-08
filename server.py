@@ -34,8 +34,7 @@ def logout():
 def homepage():
     """returns home page"""
 
-    flash('Welcome to the Homepage', "info")
-    print("homepage route")
+    # flash('Welcome to the Homepage', "info")
     return render_template ("homepage.html")
 
 
@@ -53,7 +52,6 @@ def load_user(user_id):
     """Flask-Login function to retrieve id of user from session if any, and load user into memory"""
     
     user=User.query.filter_by(user_id=user_id).first()
-
     return user
 
 @app.route('/login_page')
@@ -68,26 +66,19 @@ def login():
     """log user in and add user to session"""
     
     email = request.form.get('email')
-    print(email)
     password = request.form.get('password')
-    print(password)
     user=crud.get_user_by_email(email)
 
     if user:
         if user.check_password(password) is True:
-            print("Verified user, welcome back!")
             session['user_id'] = user.user_id
-            print(f"The user-id is: {user.user_id}")
             flash('Login completed.  Welcome back!', "success")
             return redirect(f"/users/{user.user_id}")
         else:
-            print(user.user_id)
-            flash(f"Invalid password, please try again.", "warning")
-            print("did not verify user")
-            return redirect('login_page')
+            flash('Invalid password, please try again.', "warning")
+            return redirect('/login_page')
 
     else:
-        print("does not exist")
         flash('Sorry, this user does not exit. Please try again', "warning")
         return redirect('/login_page')
 
@@ -121,7 +112,6 @@ def register_user():
             flash(f'Account created! Welcome {email}', "success")
             
         user = crud.get_user_by_email(email)
-        print("user_id: ", user.user_id)
         session['user_id'] = user.user_id
 
         return redirect(f"/users/{user.user_id}")
@@ -130,18 +120,14 @@ def register_user():
 @app.route("/users/<user_id>", methods=["POST", "GET"])
 def show_user(user_id):
     """Show saved campsites and profile of a particular user."""
-    user_id = session.get("user_id", None)
-    user = crud.get_user_by_id(user_id)
 
-    if user_id is None or user.first_name is None:
-        return redirect('/')
+    print(user_id)
     
     user = crud.get_user_by_id(user_id)
     rating=crud.get_rating_by_user_id(user_id)
 
-    print("*********route to user's homepage")
-    print(f"The logged in user_id is: {user}")
-    print(f"The logged in ratings are: {rating}")
+    print(user)
+    print(rating)
     
     return render_template("user_account.html", user=user, rating=rating)
 
@@ -149,13 +135,18 @@ def show_user(user_id):
 @app.route('/create_account')
 def create_account():
     """create an account for the user"""
+    user_id = session.get("user_id", None)
+    user = crud.get_user_by_id(user_id)
 
-    return render_template("create_account.html")
+    if user_id is None or user.first_name is None:
+        return render_template("create_account.html")
+    else:
+        return redirect(f"/users/{user.user_id}")
 
 @app.route('/search')
 def search():
     """displays the search page with form"""
-    print("found user id: ", session.get('user_id', None))    
+       
     return render_template("search.html")
 
 @app.route('/<campground_id>')
@@ -163,19 +154,14 @@ def view_campground(campground_id):
     """passes through the campground id"""
 
     user_id = session.get("user_id", None)
-    print(f"THIS is the user's ID: {user_id}")
-    print(f"this is the campground ID {campground_id}")
 
     if user_id is None:
         user = crud.create_user("Guest", "Guest", "Guest", "Guest")
-        flash("You are not logged into an account.", "warning")
     
     
     else:
         user = crud.get_user_by_id(user_id)
         flash(f"Hi! Camper {user.first_name} {user.last_name}!", "success")
-        print(user.first_name)
-        print(user.last_name)
     
     url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit=1&q={campground_id}&api_key={API_KEY}'
     response = requests.get(url)
@@ -183,52 +169,30 @@ def view_campground(campground_id):
     
     rating = crud.get_rating_by_camping_id(campground_id)
 
-    print(data)
-    # print(data['data'][0]['parkCode'])
-    park_name = find_park_name(data['data'][0]['parkCode'])
-    print(park_name)
-    
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data, park_name=park_name)
+    # park_name = find_park_name(data['data'][0]['parkCode'])
+    # print(park_name)
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
 
 @app.route('/save_reviews', methods = ["POST", "GET"])
 def save_review():
     """creates a review by user"""
+
     user_id = session.get("user_id", None)
-    print(user_id)
+    camp_name=request.form.get("camp_name")
+    print(camp_name)
     campground_id=request.form.get("campground_id")
-    print(campground_id)
     description=request.form.get("description")
     score=request.form.get("score")
     
-    rating = crud.create_rating(user_id,campground_id,description,score)
-    print(campground_id)
+    rating = crud.create_rating(user_id,camp_name, campground_id,description,score,)
 
     db.session.add(rating)
     db.session.commit()
 
-    # flash('Review saved')
+    print("RATING IS SAVED")
+    print(rating)
     return redirect(f"/{campground_id}")
     
-    #, user_id=user_id, description=description,score=score, campground_id=campground_id)
-
-# @app.route('/save_campsite', methods = ["POST"])
-# def save_campsite():
-#     """saves campsite to their account"""
-
-#     user_id = request.form.get("user_id")
-#     campground_id=request.form.get("campground_id")
-#     trip_plans=request.form.get("trip_plans")
-#     season=request.form.get("season")
-#     print(season)
-#     # rating = crud.create_rating(user_id,campground_id,description,score)
-
-#     # db.session.add(rating)
-#     # db.session.commit()
-
-#     flash('Travel Ideas have been saved to your account!')
-
-#     return print("testing this form")
-
 
 @app.route('/search_state')
 def find_campgrounds():
@@ -245,7 +209,6 @@ def find_campgrounds():
         url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode={state}&limit=650&api_key={API_KEY}'
         response = requests.get(url)
         data = response.json()
-    print(data)
     return data
 
 

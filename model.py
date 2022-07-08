@@ -40,6 +40,7 @@ class Rating(db.Model):
 
     rating_id=db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id= db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    camp_name=db.Column(db.Text)
     camping_id=db.Column(db.String)
     review_description=db.Column(db.Text)
     review_score=db.Column(db.Integer)
@@ -65,9 +66,7 @@ def connect_to_db(flask_app, db_uri="postgresql:///wecamp", echo=True):
 if __name__ == "__main__":
     from server import app
 
-    # Call connect_to_db(app, echo=False) if your program output gets
-    # too annoying; this will tell SQLAlchemy not to print out every
-    # query it executes.
+    
 
-    connect_to_db(app) #do I need to add the name of the tables afterwards?
+    connect_to_db(app) 
     

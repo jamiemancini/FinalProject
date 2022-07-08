@@ -24,10 +24,11 @@ def get_user_by_id(user_id):
     
     return User.query.get(user_id)
 
-def create_rating(user_id, camping_id,review_description, review_score):
+def create_rating(user_id, camp_name, camping_id, review_description, review_score):
     """Creates a Rating"""
     rating = Rating(
             user_id=user_id,
+            camp_name=camp_name,
             camping_id=camping_id,
             review_description=review_description,
             review_score=review_score)
