@@ -4,13 +4,33 @@
 
 <style>
   #intro {
-    background-image: url("https://i.ibb.co/fCsxcDd/CAMPING.jpg");
+    background-image: url("/static/img/NPS_SEARCH.jpg");
     height: 70vh;
     background-position: center center;
     background-size:cover;
   }
   
 </style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"">
+  <div class="container-fluid">
+    <a class="navbar-brand nav-link active disabled" href="#">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" alt="" width="24" height="30" class="d-inline-block align-top disabled">
+      WeCamp
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+       <a class="nav-item nav-link active" href="/">   Home </a> 
+        <a class="nav-item nav-link active" href="/login_page"> Login </a>
+        <a class="nav-item nav-link active" href="/create_account"> Account </a>
+        <a class="nav-item nav-link active disabled" href="/search"> Search </a> 
+      </div>
+    </div>
+  </nav>
 
 <div id="intro" class="bg-image shadow-2-strong">
 
@@ -30,7 +50,8 @@
       <div class="col-10">
         <div class="mb-3">
           <p></p>
-            <h1>Search the National Parks</h1>
+            <h1 class="text-center"><img src="/static/img/NPS_LOGO.png" 
+              alt="" height="40" class="d-inline-block align-top">   Search the National Parks</h1>
         </div>
       </div>
     </div>
@@ -40,8 +61,8 @@
     <div class="container">
         <div class="row justify-content-center">
           <div class="col-10">
-                <p>There are 400 National Park Campsites in the United States.  
-                Add search parameters to find a campsite that meets your needs.
+                <p>There are over 400 National Park Campsites in the United States.  
+                Change the search parameters to find a campsite that meets your needs.
                 </p>
             </div>
         </div>
@@ -64,11 +85,11 @@
                 <label class="card-title required" for="state">Choose a State</label>
               <select required aria-required="true" id="US_state" name="state" class="form-control form-control-lg"/>
                   <!-- <option selected disabled>--select state-- </option> -->
+                  <option value="CA">California</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
                   <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
                   <option value="CO">Colorado</option>
                   <option value="CT">Connecticut</option>
                   <option value="DE">Delaware</option>
@@ -122,9 +143,9 @@
 
             <div class="card">
               <div class="card-body">
-                <label class="card-title" for="fees">Overnight Fee 
+                <label class="card-title required" for="fees">Overnight Fee 
                 </label>
-                <input type="text" id="max_fees" class="form-control form-control-lg" name="fees" placeholder="maximum fee">
+                <input type="text" id="max_fees" class="form-control form-control-lg" name="fees" placeholder="maximum fee" required>
               </div>
             </div>
 

@@ -29,6 +29,7 @@ def logout():
     flash('You have sucessfully logged out.  Goodbye!', "info")
     return redirect("/")
 
+
 @app.route('/')
 def homepage():
     """returns home page"""
@@ -40,17 +41,12 @@ def homepage():
 
 @app.route('/cards')
 def cards():
-    """returns a sample cards page"""
+    """NOT PATH sample cards page"""
 
     flash('Welcome to the cards page')
     return render_template ("card_sample.html")
 
-@app.route('/login_page')
-def login_page():
-    """returns login page"""
 
-    print("login route")
-    return render_template('login-page.html')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -59,6 +55,13 @@ def load_user(user_id):
     user=User.query.filter_by(user_id=user_id).first()
 
     return user
+
+@app.route('/login_page')
+def login_page():
+    """returns login page"""
+
+    print("login route")
+    return render_template('login-page.html')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -97,11 +100,10 @@ def register_user():
     
 
     if request.form.get("password") != request.form.get("password1"):
-        print("Passwords don't match")
         flash('Your passwords did not match.', "warning")
         return redirect('/create_account')
+
     else:
-        print("We are creating a user!")
         first_name = request.form.get("first_name")
         last_name=request.form.get("last_name")
         email = request.form.get("email")
@@ -111,6 +113,7 @@ def register_user():
         
         if user: 
             flash('Cannot create an account with that email. Try again.', "warning")
+
         else:
             user = crud.create_user(first_name, last_name, email, password_hash)
             db.session.add(user)
@@ -118,12 +121,10 @@ def register_user():
             flash(f'Account created! Welcome {email}', "success")
             
         user = crud.get_user_by_email(email)
-        #use the functions in crud.py to find the user id
         print("user_id: ", user.user_id)
         session['user_id'] = user.user_id
 
         return redirect(f"/users/{user.user_id}")
-
 
 
 @app.route("/users/<user_id>", methods=["POST", "GET"])
@@ -165,7 +166,7 @@ def view_campground(campground_id):
     print(f"THIS is the user's ID: {user_id}")
     print(f"this is the campground ID {campground_id}")
 
-    if user_id == None:
+    if user_id is None:
         user = crud.create_user("Guest", "Guest", "Guest", "Guest")
         flash("You are not logged into an account.", "warning")
     

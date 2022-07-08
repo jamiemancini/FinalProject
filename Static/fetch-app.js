@@ -129,14 +129,13 @@ function showResults(results) {
 
         // checks for images url 
         if (parkData.images.length>0) {
-            detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
-                            <img src="${parkData.images[0]['url']}" class="card_image card-img-top rounded" alt="...">
-                            <div class="card-body">
+            detailHtml += `<div class="card m-1 p-1 text-center">
+                            <img src="${parkData.images[0]['url']}" height="175" class="card_image card-img-top rounded" alt="...">
                             <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
         }
         else {
-            detailHtml += `<div class="card m-3 p-2" style="width: 18rem;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" class="card__image card-img-top" alt="...">
+            detailHtml += `<div class="card m-1 p-1 text-center">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" height="175" class="card__image card-img-top" alt="...">
                             <div class="card-body">
                             <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
         }
@@ -149,10 +148,11 @@ function showResults(results) {
         }
 
 
-        detailHtml += `<p class="card-text">Reservable campsites: ${parkData.numberOfSitesReservable}</p>
+        detailHtml += `<p class="card-text">Toilet: ${parkData.amenities.toilets[0]}</p>
+                        <p class="card-text">Cell Reception: ${parkData.amenities["cellPhoneReception"]}</p>
+                        <p class="card-text">Reservable campsites: ${parkData.numberOfSitesReservable}</p>
                         <p class="card-text">First Come campsites: ${parkData.numberOfSitesFirstComeFirstServe}</p>
-                        <p class="card-text">${parkData.id}</p>
-                        <a href="/${parkData.id}" target="_blank" class="btn btn-lg">See Details</a></div>`;
+                        <a href="/${parkData.id}" target="_blank" class="btn btn-lg p-1">See Details</a></div>`;
 
         return detailHtml;
     }

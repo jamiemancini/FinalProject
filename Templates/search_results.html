@@ -5,7 +5,7 @@
 
 <style>
     #intro {
-      background-image: url("https://i.ibb.co/m5rgcs1/STARS.jpg");
+      background-image: url("/static/img/NPS_SEARCH-RESULS.jpg");
       height: 80vh;
       background-position: center center;
       background-size:cover;
@@ -13,12 +13,29 @@
     
   </style>
   
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark"">
+    <div class="container-fluid">
+      <a class="navbar-brand nav-link active disabled" href="#">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/US-NationalParkService-Logo.svg" alt="" width="24" height="30" class="d-inline-block align-top disabled">
+        WeCamp
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+         <a class="nav-item nav-link active" href="/">   Home </a> 
+          <a class="nav-item nav-link active" href="/login_page"> Login </a>
+          <a class="nav-item nav-link active" href="/create_account"> Account </a>
+          <a class="nav-item nav-link active " href="/search"> Search </a> 
+        </div>
+      </div>
+    </nav>
+  
   <div id="intro" class="bg-image shadow-2-strong">
 
-<!-- <p>{{campground_id}}</p>
 
-<p>Here is rating: {{rating}}</p>
-<p id="user_id">{{user_id}}: {{user.email}}</p> -->
 <div class="container">
     <div class="row justify-content-center">
       <p></p>
@@ -31,11 +48,9 @@
         <div class="mb-3">
             <div id="check_user_id">
                 {% if user.email == "Guest" %}
-                    <p>Create or Login to your account to save this campsite to your travel journal</p>
-                        <a id="login-page" href="/login_page">Login to an account</a><br>
-                        <a id="create_account" href="/create_account">Create an account</a><br>
+                <h2 class="text-center" style="color:white" >Hi, fellow camper!</h2>
                 {% else %}
-                <h5>Hi, camper {{ user.first_name }} {{user.last_name}}!</h5>
+                <h2 class="text-center" style="color:white" >Hi, camper {{ user.first_name }} {{user.last_name}}!</h2>
                 {% endif %}
             </div>
         </div>
