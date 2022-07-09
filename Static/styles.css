@@ -7,6 +7,16 @@ h1, h2, h3, h4, h5, h6 {
   color:#e07a5f;
 }
 
+.row-user {
+  color:#e07a5f;
+  background-color: #81b29a;
+}
+
+.card-header-user{
+  color:#e07a5f;
+  background-color: #81b29a;
+}
+
 .navbar-brand {
   color: #6a4b2b;
 }

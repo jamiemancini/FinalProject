@@ -1,32 +1,39 @@
 """Server for wecamp final project app."""
 
 from model import User
-from flask import Flask, render_template, request, jsonify, redirect, session, flash 
+from flask import Flask, render_template, request, redirect, session, flash, jsonify 
 import os
 import crud
 from all_NPS import *
 import requests
 import json
 from model import connect_to_db, db
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
+
+# from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 
 
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
 
-login_manager = LoginManager(app)
-login_manager.login_view = '/login_page'
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# login_manager.login_view = '/login_page'
 
 API_KEY = os.environ['NPS_KEY']
 
-@app.route("/logout")
-@login_required
+@app.route("/logout",methods=['POST', 'GET'])
+# @login_required
 def logout():
     """logs out the user"""
-
-    logout_user()
-    session.pop("user, None")
-    flash('You have sucessfully logged out.  Goodbye!', "info")
+    print("logout the user")
+    user_id = session.get("user_id", None)
+    
+    if user_id is None:
+        flash('You are not logged in. Please log in', "warning")
+        return redirect("/")
+    else:    
+        session.pop("user_id", None)
+        flash('You have sucessfully logged out.  Goodbye!', "info")
     return redirect("/")
 
 
@@ -47,12 +54,12 @@ def cards():
 
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    """Flask-Login function to retrieve id of user from session if any, and load user into memory"""
+# @login_manager.user_loader
+# def load_user(user_id):
+#     """Flask-Login function to retrieve id of user from session if any, and load user into memory"""
     
-    user=User.query.filter_by(user_id=user_id).first()
-    return user
+#     user=User.query.filter_by(user_id=user_id).first()
+#     return user
 
 @app.route('/login_page')
 def login_page():
@@ -109,7 +116,7 @@ def register_user():
             user = crud.create_user(first_name, last_name, email, password_hash)
             db.session.add(user)
             db.session.commit()
-            flash(f'Account created! Welcome {email}', "success")
+            flash(f'Account created! Welcome {email}. All your reviews will be saved to your acccount.  Start a new search.', "success")
             
         user = crud.get_user_by_email(email)
         session['user_id'] = user.user_id
@@ -154,9 +161,12 @@ def view_campground(campground_id):
     """passes through the campground id"""
 
     user_id = session.get("user_id", None)
+    print(user_id)
 
     if user_id is None:
-        user = crud.create_user("Guest", "Guest", "Guest", "Guest")
+        flash("Log in or Create an Account so that you can save your favorite camping spots!", "info")
+        user = None
+        print(user)
     
     
     else:
@@ -165,13 +175,16 @@ def view_campground(campground_id):
     
     url = f'https://developer.nps.gov/api/v1/campgrounds?stateCode=&limit=1&q={campground_id}&api_key={API_KEY}'
     response = requests.get(url)
-    data = response.json()
+    data_response = response.json()
     
     rating = crud.get_rating_by_camping_id(campground_id)
+    print(rating)
 
-    # park_name = find_park_name(data['data'][0]['parkCode'])
-    # print(park_name)
-    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data)
+    
+    park_code=(data_response['data'][0]['parkCode'])
+    park_name = find_park_name(park_code)
+    
+    return render_template ("search_results.html", rating=rating, campground_id=campground_id, user=user, user_id=user_id, campground_data=data_response, park_name=park_name)
 
 @app.route('/save_reviews', methods = ["POST", "GET"])
 def save_review():

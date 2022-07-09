@@ -50,8 +50,7 @@ function showResults(results) {
     console.log(reservable_campsites);
     let first_come_campsites= document.querySelector('#first_come_campsites');
     console.log(first_come_campsites);
-    // let total_campsites= document.querySelector('#total_campsites');
-    // console.log(total_campsites);
+    
 
     // list condition to be filtering by
     let conditions = []
@@ -108,11 +107,7 @@ function showResults(results) {
 
     }
     
-    // if (total_campsites.checked) {
-    //     conditions.push(function(parkName) {
-    //         return parkName.campsites["totalSites"] !== "0"
-    //     })
-    // }
+
 
     // all the conditions
     let filtered_results = results.data.filter(function(parkName) {

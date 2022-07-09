@@ -5,7 +5,7 @@
 
 <style>
     #intro {
-      background-image: url("/static/img/NPS_OPTION.jpg");
+      background-image: url("/static/img/FOG_WEB.jpg");
       height: 80vh;
       background-position: center center;
       background-size:cover;
@@ -42,131 +42,14 @@
     </div>
   </div>
   
-  <!-- <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-10">
-        <div class="mb-3">
-            <div id="check_user_id">
-                {% if user.email == "Guest" %}
-                <h2 class="text-center" style="color:white" >Hi, fellow camper!</h2>
-                {% else %}
-                <h2 class="text-center" style="color:white" >Hi, camper {{ user.first_name }} {{user.last_name}}!</h2>
-                {% endif %}
-            </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-    <!-- <form id="save_campsite" action="/save_campsite" method="POST">
-        <h3>Save this campsite to your account:</h3>
-        <input type="hidden" id="user_id" name="user_id" value="{{user_id}}"></input>
-        <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
-        <input type="text" id="trip_plans" name="trip_plans"> </input>
-        <select  id="season" name="season">
-            <option value="Spring">Spring</option>
-            <option value="Summer">Summer</option>
-            <option value="Fall">Fall</option>
-            <option value="Winter">Winter</option>
-            <option value="Anytime!">Anytime!</option>
-        </select>
-        <input type="submit"></input>
-    </form> -->
-  
+ 
  
 
 
-    <!-- <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <div class="mb-3">
-                    <div id="park_code">
-                        {% if campground_data['data'][0]['parkCode'] == "" %}
-                            <p>Missing</p>
-                        {% else %}
-                            <h2>{{park_name}}</h2>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 
-
-
-
-<!-- <div id = "add_review">
-    <form id="create_rating" action="/save_reviews" method="POST">
-        <h3>Camped here? Write a Review!</h3><br>
-        <input type="hidden" id="campground_id" name="campground_id" value="{{campground_id}}"></input>
-        <input type="text" id="description" name="description" placeholder="Review"> </input>
-        <select  id="score" name="score">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
-        <input type="submit"></input>
-    </form>    
-</div> -->
-
-<!-- <div id="google_links"> 
-    {% if campground_data['data'][0]['directionsUrl'] == "" %}
-        <p>No google links provided</p>
-    {% elif campground_data['data'][0]['url'] == campground_data['data'][0]['directionsUrl'] %}
-        <p>No google links provided- Park Url</p>
-    {% else %}
-    <a href="{{campground_data['data'][0]['directionsUrl']}}" target="_blank">Additional Map and Photos</a>
-    {% endif %}
-</div> -->
-<!-- 
-    <div id="NPS_campground_url">
-        {% if campground_data['data'][0]['url'] == "" %}
-            <p>No url provided</p>
-        {% else %}
-            <a href="{{campground_data['data'][0]['url']}}" target="_blank">Plan your Visit</a>
-        {% endif %}
-    </div>
-
-    <div id="NPS_reservations">
-        {% if campground_data['data'][0]['reservationUrl'] == "" %}
-            <p>No url provided</p>
-        {% else %}
-            <a href="{{campground_data['data'][0]['reservationUrl']}}" target="_blank">Make reservations </a>
-        {% endif %}
-    </div> -->
     
-    <!-- <div id="campsite_image">
-        {% if campground_data['data'][0]['images'][0]['url'] =="" %}
-            <p>No image provided</p>
-        {% else %}
-        <h4>Images</h4>
-            <img src="{{campground_data['data'][0]['images'][0]['url']}}" width ="400">
-        {% endif %}
-    </div> -->
     
-    <!-- <div id="campsite_description">
-        {% if campground_data['data'][0]['description'] == "" %}
-            <p>No description provided</p>
-        {% else %}
-            <h4>Description</h4>    
-                <p>{{campground_data['data'][0]['description']}}</p>
-        {% endif %}
-    </div> -->
-
-
-<!-- <div id="weather_overview">
-    {% if campground_data['data'][0]['weatherOverview'] == "" %}
-        <p>No weather overview provided</p>
-    {% else %}
-        <h4>Weather Overview</h4>
-            <p>{{campground_data['data'][0]['weatherOverview']}}</p>
-    {% endif %}
-</div> -->
-
-
 <div class="container">
 <div class="row" data-masonry='{"percentPosition": true}' >
 
@@ -388,26 +271,33 @@
     <div class="col-12 col-md-6 col-lg-3">
         <div class="card m-2 p-2">
                 <div class="card-body">
-                            <div id="campsite_image">
-                                {% if campground_data['data'][0]['images'][2]['url'] =="" %}
+                            <div id="quote1">
                                 <h5 class="card-title">"The scenic ideals that surround even our national
-                                     parks are carriers of a nostalgia for heavenly bliss and eternal calmness.</h5>
-                                <p class="card-text"> – Robert Smithson</p>
-                                {% else %}
-                                <img src="{{campground_data['data'][0]['images'][2]['url']}}" width ="400" class="card-img-top" alt="..."/>
-                                <p></p>
-                                <p class="card-title text-center"><img src="https://i.ibb.co/t8Z6QL0/CAMERA.jpg" 
-                                    alt="" height="25" class="card-image">Campground Image</p>
-                                {% endif %}
+                                     parks are carriers of a nostalgia for heavenly bliss and eternal calmness."</h5>
+                                <p class="card-text"> by Robert Smithson</p>
                             </div>
                 </div>
         </div>
     </div>
+
+    
    
 
 
     
-    
+    <script type="text/javascript">
+  
+        var $grid = $('#masonry').masonry({
+          itemSelector: '.col',
+          percentPosition: true
+        });
+       
+        // layout Masonry after each image loads
+        $grid.imagesLoaded().progress( function() {
+          $grid.masonry();
+        });
+       
+       </script>
 
 
 
