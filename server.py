@@ -25,7 +25,7 @@ API_KEY = os.environ['NPS_KEY']
 # @login_required
 def logout():
     """logs out the user"""
-    print("logout the user")
+
     user_id = session.get("user_id", None)
     
     if user_id is None:
@@ -41,8 +41,13 @@ def logout():
 def homepage():
     """returns home page"""
 
-    # flash('Welcome to the Homepage', "info")
-    return render_template ("homepage.html")
+    user_id = session.get("user_id", None)
+    user = crud.get_user_by_id(user_id)
+
+    if user_id is None or user.first_name is None:
+        return render_template("homepage.html")
+    else:
+        return redirect(f"/users/{user.user_id}")
 
 
 @app.route('/cards')
@@ -128,13 +133,10 @@ def register_user():
 def show_user(user_id):
     """Show saved campsites and profile of a particular user."""
 
-    print(user_id)
     
     user = crud.get_user_by_id(user_id)
     rating=crud.get_rating_by_user_id(user_id)
 
-    print(user)
-    print(rating)
     
     return render_template("user_account.html", user=user, rating=rating)
 
