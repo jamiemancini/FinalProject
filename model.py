@@ -46,9 +46,28 @@ class Rating(db.Model):
     review_score=db.Column(db.Integer)
 
     user = db.relationship("User", backref="ratings")
-
+    
     def __repr__(self):
         return f"<Rating user_id={self.user_id} camping_id={self.camping_id} review: {self.review_description} score: {self.review_score}> "
+
+# class Note(db.Model):
+#     """User Notes of Campsites"""
+
+#     __tablename__="notes"
+
+#     note_id=db.Column(db.Integer,autoincrement=True,primary_key=True, unique=True)
+#     user_id= db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     camping_id=db.Column(db.String)
+#     camping_name=db.Column(db.String)
+#     activity_notes=db.Column(db.Text)
+#     campsite_notes=db.Column(db.Text)
+#     park_notes= db.Column(db.Text)
+
+#     user = db.relationship("User", backref="notes")
+
+
+    # def __repr__(self):
+    #     return f"<Note note_id ={self.note_id} user_id={self.user_id} camping_id={self.camping_id}> "        
 
 def connect_to_db(flask_app, db_uri="postgresql:///wecamp", echo=True):
     """connect to database"""

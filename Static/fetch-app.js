@@ -58,11 +58,8 @@ function showResults(results) {
     if (maxFeeSelected) {
         conditions.push(function(parkName) {
             let fee = parkName.fees.find(fee => fee !== []);
-            console.log(parkName.fees.length);
-            console.log(fee);
-            console.log(fee['cost']);
-            console.log(parkName.name);
-            return fee['cost'] < maxFeeSelected.value || maxFeeSelected.value===""
+        
+            return (fee === undefined || Number(fee['cost']) < maxFeeSelected.value) || maxFeeSelected.value===""
         });
     }
 
@@ -134,7 +131,7 @@ function showResults(results) {
                             <div class="card-body">
                             <h5 class="card-title" id="${parkData.name}">${parkData.name}</h5>`;
         }
-        
+        console.log(parkData.fees)
         // checks for fees data
         if (parkData.fees.length > 0) {
             detailHtml += `<h6 class="card-subtitle mb-2 text-muted">$${parkData.fees[0]["cost"]} per night</h6>`;

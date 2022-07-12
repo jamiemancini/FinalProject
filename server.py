@@ -1,6 +1,6 @@
 """Server for wecamp final project app."""
 
-from model import User
+from model import User, Rating
 from flask import Flask, render_template, request, redirect, session, flash, jsonify 
 import os
 import crud
@@ -40,7 +40,7 @@ def logout():
 @app.route('/')
 def homepage():
     """returns home page"""
-
+    
     user_id = session.get("user_id", None)
     user = crud.get_user_by_id(user_id)
 
@@ -137,7 +137,6 @@ def show_user(user_id):
     user = crud.get_user_by_id(user_id)
     rating=crud.get_rating_by_user_id(user_id)
 
-    
     return render_template("user_account.html", user=user, rating=rating)
 
 
@@ -208,6 +207,29 @@ def save_review():
     print(rating)
     return redirect(f"/{campground_id}")
     
+# @app.route('/save_notes', methods = ["POST", "GET"])
+# def save_notes():
+#     """creates a set of notes by user"""
+
+#     print("****************************************here")
+#     user_id = session.get("user_id", None)
+#     campground_id=request.form.get("campground_id")
+    
+#     activity_note=request.form.get("activity_note")
+#     campsite_note=request.form.get("campsite_note")
+#     park_note=request.form.get("park_note")
+    
+    
+#     note = crud.create_note(user_id, campground_id, activity_note, campsite_note,park_note)
+
+#     db.session.add(note)
+#     db.session.commit()
+
+#     print("Notes are saved")
+#     print(note)
+
+#     return redirect(f"/users/{user_id}", note=note)
+
 
 @app.route('/search_state')
 def find_campgrounds():

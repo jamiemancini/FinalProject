@@ -44,6 +44,28 @@ def get_rating_by_camping_id(camping_id):
 
     return Rating.query.filter(Rating.camping_id==camping_id).all()
 
+# def create_note(user_id, camping_id, camping_name, activity_notes, campsite_notes, park_notes):
+#     """Creates a Note"""
+#     note = Note(
+#             user_id=user_id,
+#             camping_id=camping_id,
+#             camping_name=camping_name,
+#             activity_notes=activity_notes,
+#             campsite_notes=campsite_notes,
+#             park_notes=park_notes)
+
+#     return note
+
+# def get_notes_by_user_id(user_id):
+#     """Returns the notes by user_id"""
+
+#     return Note.query.filter(Note.user_id==user_id).all()
+
+# def get_notes_by_camping_id(camping_id):
+#     """Returns the notes by user_id"""
+
+#     return Note.query.filter(Note.camping_id==camping_id).all()
+
 if __name__ == '__main__':
     from server import app
     connect_to_db(app)
